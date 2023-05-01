@@ -99,10 +99,37 @@ public class TesteTemporatio {
     }
 
     public static void menuCompCurricular(){
-
+        /*Cadastrar Componente Curricular
+        Editar Componente Curricular
+        Ver dados de um Componente Curricular
+        Listar Componentes Curriculares
+        Excluir Componente Curricular
+ */
+        System.out.println("\t==Componete Curricular==");
+        System.out.println("[1] - Cadastrar Componente Curricular");
+        System.out.println("[2] - Editar Componente Curricular");
+        System.out.println("[3] - Ver dados de um Componente Curricular");
+        System.out.println("[4] - Listar Componente Curricular");
+        System.out.println("[5] - Excluir Componente Curricular");
+        System.out.println("[6] - Voltar");
     }
 
     public static void menuTurma(){
+        /*Cadastrar Turma
+        Editar Turma
+        Ver dados de uma Turma
+        Listar todas as Turmas (em formato de tabela)
+        Listar Turmas por semestre (em formato de tabela)
+        Listar Turmas por Professor (em formato de tabela)
+        Excluir Turma
+ */
+        System.out.println("\t==Turma==");
+        System.out.println("[1] - Cadastrar Turma");
+        System.out.println("[2] - Editar Turma");
+        System.out.println("[3] - Ver dados de um Turma");
+        System.out.println("[4] - Listar Turma");
+        System.out.println("[5] - Excluir Turma");
+        System.out.println("[6] - Voltar");
 
     }
 

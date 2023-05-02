@@ -126,23 +126,24 @@ public class TesteTemporatio {
                 break;
 
                 default:
-                System.out.println("Erro!");
+                System.out.println("\tErro! Digite novamente");
                 break;
             }
         }while(opcao != 4);
 
-
-        
         sc.close();
        
     }
 
     public static void menuPrincipal(){
-        System.out.println("\n\tPara consultar as áreas abaixo digite a tecla correspondente");
-        System.out.println("[1] - Professor");
-        System.out.println("[2] - Componente Curricular");
-        System.out.println("[3] - Turma");
-        System.out.println("[4] - Sair");
+        System.out.println("\n|============ Menu =============|");
+        System.out.println("| [1] - Professor\t\t|");
+        System.out.println("| [2] - Componente Curricular\t|");
+        System.out.println("| [3] - Turma\t\t\t|");
+        System.out.println("| [4] - Sair\t\t\t|");
+        System.out.println("---------------------------------");
+        System.out.println("Para consultar as áreas digite o número correspondente");
+
     }
 
 
@@ -153,13 +154,13 @@ public class TesteTemporatio {
             Listar Professores
             Excluir Professor
  */
-        System.out.println("\t==Professor==");
-        System.out.println("[1] - Cadastrar Professor");
-        System.out.println("[2] - Editar Professor");
-        System.out.println("[3] - Ver dados de um professor");
-        System.out.println("[4] - Listar Professor");
-        System.out.println("[5] - Excluir professor");
-        System.out.println("[6] - Voltar");
+        System.out.println("\n|========== Professor ===========|");
+        System.out.println("|[1] - Cadastrar Professor\t |");
+        System.out.println("|[2] - Editar Professor\t\t |");
+        System.out.println("|[3] - Ver dados de um professor |");
+        System.out.println("|[4] - Listar Professor\t\t |");
+        System.out.println("|[5] - Excluir professor\t |");
+        System.out.println("|[6] - Voltar\t\t\t |\n");
     }
 
     public static void menuCompCurricular(){
@@ -169,13 +170,13 @@ public class TesteTemporatio {
         Listar Componentes Curriculares
         Excluir Componente Curricular
  */
-        System.out.println("\t==Componete Curricular==");
-        System.out.println("[1] - Cadastrar Componente Curricular");
-        System.out.println("[2] - Editar Componente Curricular");
-        System.out.println("[3] - Ver dados de um Componente Curricular");
-        System.out.println("[4] - Listar Componente Curricular");
-        System.out.println("[5] - Excluir Componente Curricular");
-        System.out.println("[6] - Voltar");
+        System.out.println("\n|=========== Componete Curricular ==============|");
+        System.out.println("|[1] - Cadastrar Componente Curricular\t\t|");
+        System.out.println("|[2] - Editar Componente Curricular\t\t|");
+        System.out.println("|[3] - Ver dados de um Componente Curricular\t|");
+        System.out.println("|[4] - Listar Componente Curricular\t\t|");
+        System.out.println("|[5] - Excluir Componente Curricular\t\t|");
+        System.out.println("|[6] - Voltar\t\t\t\t\t|\n");
     }
 
     public static void menuTurma(){
@@ -187,13 +188,13 @@ public class TesteTemporatio {
         Listar Turmas por Professor (em formato de tabela)
         Excluir Turma
  */
-        System.out.println("\t==Turma==");
-        System.out.println("[1] - Cadastrar Turma");
-        System.out.println("[2] - Editar Turma");
-        System.out.println("[3] - Ver dados de um Turma");
-        System.out.println("[4] - Listar Turma");
-        System.out.println("[5] - Excluir Turma");
-        System.out.println("[6] - Voltar");
+        System.out.println("\n|=========== Turma =============|");
+        System.out.println("|[1] - Cadastrar Turma\t\t|");
+        System.out.println("|[2] - Editar Turma\t\t|");
+        System.out.println("|[3] - Ver dados de uma Turma\t|");
+        System.out.println("|[4] - Listar Turma\t\t|");
+        System.out.println("|[5] - Excluir Turma\t\t|");
+        System.out.println("|[6] - Voltar\t\t\t|\n");
 
     }
 

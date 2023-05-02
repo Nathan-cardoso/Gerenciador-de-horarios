@@ -50,11 +50,75 @@ public class TesteTemporatio {
                 break;
 
                 case 2:
-                System.out.println("Ok");
+                do{
+                    menuCompCurricular();
+                    System.out.print("Digite: ");
+                    opcao = sc.nextShort();
+        
+                    switch(opcao){
+                        case 1: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 2: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 3: 
+                        System.out.println("ok");
+                        break;
+
+                        case 4: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 5:
+                        System.out.println("ok");
+                        break;
+
+                        case 6:
+                        break;
+                        default:
+                        System.out.println("Erro de digitação");
+                        break;
+                    }
+                }while(opcao != 6);
                 break;
 
                 case 3:
-                System.out.println("Ok");
+                do{
+                    menuTurma();
+                    System.out.print("Digite: ");
+                    opcao = sc.nextShort();
+        
+                    switch(opcao){
+                        case 1: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 2: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 3: 
+                        System.out.println("ok");
+                        break;
+
+                        case 4: 
+                        System.out.println("ok");
+                        break;
+        
+                        case 5:
+                        System.out.println("ok");
+                        break;
+
+                        case 6:
+                        break;
+                        default:
+                        System.out.println("Erro de digitação");
+                        break;
+                    }
+                }while(opcao != 6);
                 break;
 
                 case 4:
@@ -131,6 +195,12 @@ public class TesteTemporatio {
         System.out.println("[5] - Excluir Turma");
         System.out.println("[6] - Voltar");
 
+    }
+
+    public static void subMenuTurma(){
+        /*Listar todas as Turmas (em formato de tabela)
+        Listar Turmas por semestre (em formato de tabela)
+        Listar Turmas por Professor (em formato de tabela) */
     }
 
 

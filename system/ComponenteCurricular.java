@@ -17,6 +17,7 @@ public class ComponenteCurricular {
         this.semestre = semestre;
     }
  
+    //Criando um get para ser utilizado por professor.
     public int getCargaHorariaComp() {
         return cargaHorariaComp;
     }

@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 package Project.system;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+public class Professor{
+>>>>>>> 3dc0a505ebdef3a85b1250af532ef27f07c67da9
 
 public class Professor {
     private String nome;

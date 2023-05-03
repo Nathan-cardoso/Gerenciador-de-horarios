@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-package Project.system;
-
 import java.util.ArrayList;
 import java.util.List;
-=======
-public class Professor{
->>>>>>> 3dc0a505ebdef3a85b1250af532ef27f07c67da9
 
 public class Professor {
     private String nome;
@@ -47,11 +41,11 @@ public class Professor {
     public void addComponente(ComponenteCurricular componente) {
         componentes.add(componente);
         // Incrementa a carga horária do professor com a carga horária do componente
-        cargaHoraria += componente.getCargaHoraria();
+        cargaHoraria += componente.getCargaHorariaComp();
     }
 
     // Verifica se o professor pode ministrar um componente curricular
     public boolean podeMinistrar(ComponenteCurricular componente) {
-        return (cargaHoraria + componente.getCargaHoraria()) <= 20;
+        return (cargaHoraria + componente.getCargaHorariaComp()) <= 20;
     }
 }

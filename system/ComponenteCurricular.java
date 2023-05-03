@@ -11,6 +11,10 @@ public class ComponenteCurricular {
     public static void addComponenteCurricular(){
 
     }
+
+    public int getCargaHoraria() {
+        return 0;
+    }
     
 
 

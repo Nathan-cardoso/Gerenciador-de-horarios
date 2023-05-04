@@ -41,11 +41,11 @@ public class ComponenteCurricular {
 
         if(qntLinhasInseridas > 0){ //Verificando se foi inserido.
 
-            System.out.println("Item inserido");
+            System.out.println("Componente curricular cadastrado...");
 
         }else{
 
-            System.out.println("Componente curricular cadastrado...");
+            System.out.println("Não foi possivel cadastrar componente curricular");
         }
             pmst.close();
 
@@ -59,7 +59,29 @@ public class ComponenteCurricular {
     }
 
     public void editarComponenteCurricular(){
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "UPDATE comp_curricular SET nome_disciplina = ?, carga_horaria_comp = ?,componente_ob = ?, semestre = ? WHERE cod_disciplina = ?";
+            PreparedStatement psmt = connection.prepareStatement(query);
+            psmt.setString(1, this.nomeDisciplina);
+            psmt.setInt(2, this.cargaHorariaComp);
+            psmt.setBoolean(3, this.componenteObrigatorio);
+            psmt.setString(4, this.semestre);
+            psmt.setString(5, this.codCompCurricular);
 
+            int qntLinharasAlteradas = psmt.executeUpdate();
+
+            if(qntLinharasAlteradas > 0){
+                System.out.println("Componente editado com sucesso!");
+            }else{
+                System.out.println("Não editado");
+            }
+
+        } catch (java.sql.SQLException e) {
+
+            System.out.println(e.getMessage());
+
+        }
     }
 
     public void verDadosDeUmComponenteCurricular(){

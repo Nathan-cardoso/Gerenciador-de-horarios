@@ -57,7 +57,25 @@ public class TesteTemporatio {
         
                     switch(opcao){
                         case 1: 
-                            ComponenteCurricular cc = new ComponenteCurricular("pex777", "poo", 60, true, "2021.1");
+                        //Teste para usuário 
+                        sc.nextLine();
+                        System.out.println("Digite o cod");
+                        String codCompCurricular = sc.nextLine();
+
+                        System.out.println("Digite o nome");
+                        String nomeDisciplina = sc.nextLine();
+                        
+                        System.out.println("Digite a carga");
+                        
+                        int cargaHorariaComp =sc.nextInt();
+                        System.out.println("O componente é obrigatorio");
+
+                        boolean componenteObrigatorio = sc.nextBoolean();
+                        System.out.println("Digite o semestre");
+                        sc.nextLine();
+
+                        String semestre = sc.nextLine();
+                            ComponenteCurricular cc = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
 
                             cc.cadastrarComponenteCurricular();
                             

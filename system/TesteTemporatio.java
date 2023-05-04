@@ -82,7 +82,8 @@ public class TesteTemporatio {
                         break;
         
                         case 2: 
-                        System.out.println("ok");
+                                System.out.println("Digite o código do componente curricular");
+                               //Continua...
                         break;
         
                         case 3: 

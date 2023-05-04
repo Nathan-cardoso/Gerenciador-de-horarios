@@ -57,7 +57,10 @@ public class TesteTemporatio {
         
                     switch(opcao){
                         case 1: 
-                        System.out.println("ok");
+                            ComponenteCurricular cc = new ComponenteCurricular("pex777", "poo", 60, true, "2021.1");
+
+                            cc.cadastrarComponenteCurricular();
+                            
                         break;
         
                         case 2: 

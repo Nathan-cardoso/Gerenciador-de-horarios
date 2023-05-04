@@ -6,6 +6,7 @@ public class TesteTemporatio {
     public static void main(String[] args) {
         short opcao;
         Scanner sc = new Scanner(System.in);
+         ComponenteCurricular cc = new ComponenteCurricular();
         do{
             menuPrincipal();
             System.out.print("Digite: ");
@@ -61,29 +62,32 @@ public class TesteTemporatio {
                         sc.nextLine();
                         System.out.println("Digite o cod");
                         String codCompCurricular = sc.nextLine();
+                        cc.setCodCompCurricular(codCompCurricular);
 
                         System.out.println("Digite o nome");
                         String nomeDisciplina = sc.nextLine();
-                        
-                        System.out.println("Digite a carga");
-                        
-                        int cargaHorariaComp =sc.nextInt();
-                        System.out.println("O componente é obrigatorio");
+                        cc.setNomeDisciplina(nomeDisciplina);
 
+                        System.out.println("Digite a carga");
+                        int cargaHorariaComp =sc.nextInt();
+                        cc.setCargaHorariaComp(cargaHorariaComp);
+
+                        System.out.println("O componente é obrigatorio");
                         boolean componenteObrigatorio = sc.nextBoolean();
+                        cc.setComponenteObrigatorio(componenteObrigatorio);
                         System.out.println("Digite o semestre");
                         sc.nextLine();
-
                         String semestre = sc.nextLine();
-                            ComponenteCurricular cc = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
+                        cc.setSemestre(semestre);
+                           //ComponenteCurricular cc = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre); 
 
                             cc.cadastrarComponenteCurricular();
                             
                         break;
         
                         case 2: 
-                                System.out.println("Digite o código do componente curricular");
-                               //Continua...
+                        System.out.println("ok");
+
                         break;
         
                         case 3: 
@@ -91,7 +95,7 @@ public class TesteTemporatio {
                         break;
 
                         case 4: 
-                        System.out.println("ok");
+                        cc.listarComponentesCurriculares();
                         break;
         
                         case 5:

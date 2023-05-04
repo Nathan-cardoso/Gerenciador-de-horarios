@@ -18,11 +18,51 @@ public class ComponenteCurricular {
         this.componenteObrigatorio = componenteObrigatorio;
         this.semestre = semestre;
     }
+    
+    public ComponenteCurricular(){
+        
+    }
+
+    public void setCodCompCurricular(String codCompCurricular) {
+        this.codCompCurricular = codCompCurricular;
+    }
  
+    public void setNomeDisciplina(String nomeDisciplina) {
+        this.nomeDisciplina = nomeDisciplina;
+    }
+
+
+
+    public void setCargaHorariaComp(int cargaHorariaComp) {
+        this.cargaHorariaComp = cargaHorariaComp;
+    }
+
+
+
+    public void setComponenteObrigatorio(boolean componenteObrigatorio) {
+        this.componenteObrigatorio = componenteObrigatorio;
+    }
+
+
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+
+
+
     //Criando um get para ser utilizado por professor.
     public int getCargaHorariaComp() {
         return cargaHorariaComp;
     }
+
+    
+
+    public String getCodCompCurricular() {
+        return codCompCurricular;
+    }
+
+
 
     public void cadastrarComponenteCurricular(){
         try{
@@ -103,7 +143,6 @@ public class ComponenteCurricular {
                 + ", cargaHorariaComp=" + cargaHorariaComp + ", componenteObrigatorio=" + componenteObrigatorio + ", semestre="
                 + semestre + "]";
     }
-
 
 
 }

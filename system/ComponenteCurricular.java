@@ -35,16 +35,17 @@ public class ComponenteCurricular {
         pmst.setInt(3, this.cargaHorariaComp);
         pmst.setBoolean(4, this.componenteObrigatorio);
         pmst.setString(5, this.semestre);
+        //Os números antes dos atributos mostram a posição do parâmetro na consulta, posição essa que é referente ao '?' na query acima.
         int qntLinhasInseridas = pmst.executeUpdate(); //executeUpdata executa a query.
         //qntLinharasInseridas é uma variável que identifica se foram inseridos.
 
-        if(qntLinhasInseridas > 0){ //Verificação.
+        if(qntLinhasInseridas > 0){ //Verificando se foi inserido.
 
             System.out.println("Item inserido");
 
         }else{
 
-            System.out.println("Erro na inserção dos dados");
+            System.out.println("Componente curricular cadastrado...");
         }
             pmst.close();
 
@@ -53,6 +54,8 @@ public class ComponenteCurricular {
             System.out.println(e.getMessage());
 
         }
+
+        //Se tudo ok, o usuário será notificado que o componente foi cadastrado
     }
 
 

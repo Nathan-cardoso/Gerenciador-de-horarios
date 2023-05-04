@@ -129,7 +129,18 @@ public class ComponenteCurricular {
     }
 
     public void listarComponentesCurriculares(){
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "SELECT * FROM comp_curricular";
+            PreparedStatement pmst = connection.prepareStatement(query);
+            pmst.executeUpdate();
+            
+            
+        } catch (java.sql.SQLException e) {
 
+            System.out.println(e.getMessage());
+
+        }
     }
 
     public void excluirComponentesCurriculares(){

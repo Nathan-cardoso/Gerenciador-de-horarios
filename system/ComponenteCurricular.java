@@ -58,6 +58,22 @@ public class ComponenteCurricular {
         //Se tudo ok, o usuário será notificado que o componente foi cadastrado
     }
 
+    public void editarComponenteCurricular(){
+
+    }
+
+    public void verDadosDeUmComponenteCurricular(){
+
+    }
+
+    public void listarComponentesCurriculares(){
+
+    }
+
+    public void excluirComponentesCurriculares(){
+        
+    }
+
 
 
     public String toString() {

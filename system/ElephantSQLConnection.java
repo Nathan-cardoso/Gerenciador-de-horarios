@@ -1,10 +1,10 @@
 /*Essa classe foi criada para automatizar o processo de conexão e desconexão com o banco de dados, tendo em vista
  * que esse processo requer algumas linhas repedidas de código.
  */
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
+// import java.sql.SQLException;
+import java.sql.*;
 
 public class ElephantSQLConnection { //O nome do serviço que está o banco é elephant sql site:https://www.elephantsql.com/
     //Variaveis para a conexão.
@@ -14,7 +14,7 @@ public class ElephantSQLConnection { //O nome do serviço que está o banco é e
 
     public static Connection getConnection() throws SQLException { //método para conexão
         Connection connection = null;
-        try {
+        try {         
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {

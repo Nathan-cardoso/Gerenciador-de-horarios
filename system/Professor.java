@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Professor {
+    private String ciap;
     private String nome;
     private String formacao;
     private String email;
@@ -11,12 +12,19 @@ public class Professor {
     private List<ComponenteCurricular> componentes;
 
     // Construtor da classe Professor
-    public Professor(String nome, String formacao, String email) {
+    public Professor(String ciap, String nome, String formacao, String email) {
+        this.ciap = ciap;
         this.nome = nome;
         this.formacao = formacao;
         this.email = email;
         this.cargaHoraria = 0;
         this.componentes = new ArrayList<>();
+    }
+
+    
+// Get para obtero nome do professor
+    public String getCiap() {
+        return ciap;
     }
 
     // Get para obter o nome do professor
@@ -52,15 +60,16 @@ public class Professor {
     }
     
 
-    public void cadastrarProfessor(Professor professor) {
+    public static void cadastrarProfessor(Professor professor) {
         try {
             Connection connection = ElephantSQLConnection.getConnection();
-            String query = "INSERT INTO professor (nome, formacao, email, carga_horaria) VALUES (?,?,?,?)";
+            String query = "INSERT INTO professor (ciap, nome, formacao, email, carga_horaria) VALUES (?,?,?,?,?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, professor.getNome());
-            pstmt.setString(2, professor.getFormacao());
-            pstmt.setString(3, professor.getEmail());
-            pstmt.setInt(4, professor.getCargaHoraria());
+            pstmt.setString(1,professor.getCiap());
+            pstmt.setString(2, professor.getNome());
+            pstmt.setString(3, professor.getFormacao());
+            pstmt.setString(4, professor.getEmail());
+            pstmt.setInt(5, professor.getCargaHoraria());
             int linhasAfetadas = pstmt.executeUpdate();
 
             if (linhasAfetadas > 0) {

@@ -1,6 +1,7 @@
-
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class Professor {
     private String nome;
@@ -49,4 +50,29 @@ public class Professor {
     public boolean podeMinistrar(ComponenteCurricular componente) {
         return (cargaHoraria + componente.getCargaHorariaComp()) <= 20;
     }
+    
+
+    public void cadastrarProfessor(Professor professor) {
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "INSERT INTO professor (nome, formacao, email, carga_horaria) VALUES (?,?,?,?)";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, professor.getNome());
+            pstmt.setString(2, professor.getFormacao());
+            pstmt.setString(3, professor.getEmail());
+            pstmt.setInt(4, professor.getCargaHoraria());
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                 System.out.println("Professor cadastrado com sucesso!");
+            } else {
+                System.out.println("Erro ao cadastrar professor.");
+            }
+
+            pstmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar professor: " + e.getMessage());
+        }
+    } 
 }

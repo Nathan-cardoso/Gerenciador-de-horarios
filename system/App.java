@@ -58,9 +58,9 @@ public class App {
         
                     switch(opcao){
                         case 1: 
-                        //Teste para usuário 
+                        short escolhaOptativa;
                         sc.nextLine();
-                        System.out.println("Digite o cod");
+                        System.out.println("Digite o codigo do componente");
                         String codCompCurricular = sc.nextLine();
                        
 
@@ -68,38 +68,59 @@ public class App {
                         String nomeDisciplina = sc.nextLine();
                        
 
-                        System.out.println("Digite a carga");
+                        System.out.println("Digite a carga horaria ");
                         int cargaHorariaComp =sc.nextInt();
-                        ;
 
-                        System.out.println("O componente é obrigatorio");
-                        boolean componenteObrigatorio = sc.nextBoolean();
+                        System.out.println("O componente é obrigatorio?");
+                        System.out.println("1 - sim\n2 - nao");
+                        escolhaOptativa = sc.nextShort();
+                        boolean componenteObrigatorio;
+                        if(escolhaOptativa == 1){
+                            componenteObrigatorio = true;
+                        }else if(escolhaOptativa == 2){
+                            componenteObrigatorio = false;
+                        }else{
+                            System.out.println("Erro de digitação!");
+                            return;
+                        }
                        
                         System.out.println("Digite o semestre");
                         sc.nextLine();
                         int semestre = sc.nextInt();
                        
                         ComponenteCurricular cc = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
-                        cc.cadastrarComponenteCurricular();
-                        componenteCurriculara.add(cc);
-                            
+                        cc.cadastrarComponenteCurricular();   
                         break;
-        
+                        
                         case 2: 
-                        System.out.println("ok");
+                       System.out.println(componenteCurriculara);
 
                         break;
         
                         case 3: 
-                        System.out.println("ok");
+                        System.out.println("Digite o código do componente: ");
+                        sc.nextLine();
+                        String codCC1 = sc.nextLine();
+                        ComponenteCurricular.verDadosDeUmComponenteCurricular(codCC1);
                         break;
 
                         case 4: 
-                        ComponenteCurricular.listarComponentesCurriculares();
+                         ComponenteCurricular.listarComponentesCurriculares();
                         break;
         
                         case 5:
-                        System.out.println("ok");
+                        
+                        System.out.println("Digite o código do componente: ");
+                        sc.nextLine();
+                        String codCC = sc.nextLine();
+                        System.out.println("\tDeseja excluir esse componente?\nConfirme a ação\n1 - sim\t outro numero - nao");
+                        short confirmacao = sc.nextShort();
+                        if(confirmacao == 1){
+                            ComponenteCurricular.excluirComponentesCurriculares(codCC);
+                        }else{
+                            System.out.println("Ação cancelada...");
+                        }
+
                         break;
 
                         case 6:
@@ -158,7 +179,6 @@ public class App {
         }while(opcao != 4);
 
         sc.close();
-       
     }
 
     public static void menuPrincipal(){

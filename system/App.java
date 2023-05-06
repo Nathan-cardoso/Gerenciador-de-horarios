@@ -21,7 +21,24 @@ public class App {
         
                     switch(opcao){
                         case 1: 
-                        System.out.println("ok");
+                        sc.nextLine();
+                        System.out.println("Digite seu ciap: ");
+                        String ciap = sc.nextLine();
+                
+                        //sc.nextLine();
+                
+                        System.out.println("Nome:");
+                        String nome = sc. nextLine();
+                
+                        System.out.println("titulo: ");
+                        String formacao = sc.nextLine();
+                
+                
+                        System.out.println("email: ");
+                        String email = sc.nextLine();
+                
+                        Professor prof = new Professor(nome, formacao,ciap, email);
+                        Professor.cadastrarProfessor(prof);
                         break;
         
                         case 2: 
@@ -29,15 +46,30 @@ public class App {
                         break;
         
                         case 3: 
-                        System.out.println("ok");
+                        sc.nextLine();
+                        System.out.println("Digite o ciap do professor: ");
+                        String ciapTemp1 = sc.nextLine();
+                        Professor.verDadosDeUmProfessor(ciapTemp1);
                         break;
 
                         case 4: 
-                        System.out.println("ok");
+                        Professor.listarProfessores();
                         break;
         
                         case 5:
-                        System.out.println("ok");
+                                
+                        short acessoTemp;
+                        sc.nextLine();
+                        System.out.println("Digite o ciap do professor: ");
+                        String ciapTemp = sc.nextLine();
+                        System.out.println("\tDeseja realmente exluir o professor?");
+                        System.out.println("Confirme a ação\t1 - sim \t outro numero - nao");
+                        acessoTemp = sc.nextShort();
+                        if(acessoTemp == 1){
+                            Professor.excluirProfessor(ciapTemp);
+                        }else{
+                            System.out.println("Ação cancelada...");
+                        }
                         break;
 
                         case 6:

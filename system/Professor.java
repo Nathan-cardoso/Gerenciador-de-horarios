@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +10,6 @@ public class Professor {
     private String formacao;
     private String email;
     private int cargaHoraria;
-    private List<ComponenteCurricular> componentes;
 
     // Construtor da classe Professor
     public Professor(String nome, String formacao, String ciap, String email) {
@@ -19,8 +17,6 @@ public class Professor {
         this.formacao = formacao;
         this.ciap = ciap;
         this.email = email;
-        this.cargaHoraria = 0;
-        this.componentes = new ArrayList<>();
     }
 
     
@@ -49,34 +45,33 @@ public class Professor {
         return cargaHoraria;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Nome: %-20s | Formação: %-10s | CIAP: %-5s | Email: %s", nome, formacao, ciap, email);
-    }
+    // public ArrayList<String> getComponentes() {
+    //     return componentes;
+    // } 
 
     // Método para adicionar um componente curricular ministrado pelo professor
-    public void addComponente(ComponenteCurricular componente) {
-        componentes.add(componente);
-        // Incrementa a carga horária do professor com a carga horária do componente
-        cargaHoraria += componente.getCargaHorariaComp();
-    }
+    // public void addComponente(String componente) {
+    //     componentes.add(componente);
+    //     // Incrementa a carga horária do professor com a carga horária do componente
+    // }
 
     // Verifica se o professor pode ministrar um componente curricular
-    public boolean podeMinistrar(ComponenteCurricular componente) {
-        return (cargaHoraria + componente.getCargaHorariaComp()) <= 20;
-    }
+    // public boolean podeMinistrar(ComponenteCurricular componente) {
+
+    // }
     
     //Metodo que cafastra o Professor
     public static void cadastrarProfessor(Professor professor) {
         try {
+
             Connection connection = ElephantSQLConnection.getConnection();
-            String query = "INSERT INTO professor (ciap, nome, formacao, email, carga_horaria) VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO professor (ciap, nome, formacao, email) VALUES (?,?,?,?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1,professor.getCiap());
             pstmt.setString(2, professor.getNome());
             pstmt.setString(3, professor.getFormacao());
             pstmt.setString(4, professor.getEmail());
-            pstmt.setInt(5, professor.getCargaHoraria());
+            // pstmt.setInt(5, professor.getCargaHoraria());
             int linhasAfetadas = pstmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
@@ -98,7 +93,39 @@ public class Professor {
     }
 
     // Metodo para ver dados de um professor
-    public static void verDadosDeUmProfessor(){
+    public static void verDadosDeUmProfessor(String idProf){
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String querySearch = "SELECT * FROM professor WHERE ciap = ?";
+            psmt = connection.prepareStatement(querySearch);
+            psmt.setString(1, idProf);
+            rs = psmt.executeQuery();
+            
+            if(!rs.next()){
+                System.out.println("O ciap não foi encontrado...");
+            }else{
+                do{
+                    String ciap = rs.getString("ciap");
+                    String nome = rs.getString("nome");
+                    String formacao = rs.getString("formacao");
+                    String email = rs.getString("email");
+
+                    Professor prof = new Professor(ciap, nome, formacao, email);
+                    System.out.println("Professor correspondente ao CIAP " + idProf);
+                    System.out.println(prof.getNome() + "\t " + prof.getFormacao() + "\t\t " + prof.getCiap() + "\t\t" + prof.getEmail() );
+                }while(rs.next());
+            }
+
+            connection.close();
+            rs.close();
+            psmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erro em ver dados do professor: " + e.getMessage());
+        }
 
     }
 
@@ -158,5 +185,10 @@ public class Professor {
         } catch (SQLException e) {
             System.out.println("Erro ao excluir professor: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %-20s | Formação: %-10s | CIAP: %-5s | Email: %s", nome, formacao, ciap, email);
     }
 }

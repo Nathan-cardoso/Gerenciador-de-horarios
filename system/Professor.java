@@ -103,7 +103,7 @@ public class Professor {
                 pstmt.setString(1, ciap);
     
                 ResultSet rs = pstmt.executeQuery();
-    
+            
                 if (!rs.next()) {
                     System.out.println("Professor não encontrado.");
                 } else {
@@ -143,7 +143,7 @@ public class Professor {
                         if (linhasAfetadas > 0) {
                             System.out.println("Professor atualizado com sucesso!");
                         } else {
-                            System.out.println("Erro ao atualizar professor.");
+                                System.out.println("Erro ao atualizar professor.");
                         }
     
                         scan.nextLine(); // Limpa o buffer do teclado
@@ -161,7 +161,9 @@ public class Professor {
                 rs.close();
                 pstmt.close();
                 connection.close();
+                scan.close();
             } while (true);
+            
     
         } catch (Exception e) {
             System.out.println("Erro ao editar professor: " + e.getMessage());
@@ -189,9 +191,9 @@ public class Professor {
                     String formacao = rs.getString("formacao");
                     String email = rs.getString("email");
 
-                    Professor prof = new Professor(ciap, nome, formacao, email);
+                    Professor prof = new Professor(nome, formacao, ciap, email);
                     System.out.println("Professor correspondente ao CIAP " + idProf);
-                    System.out.println(prof.getNome() + "\t " + prof.getFormacao() + "\t\t " + prof.getCiap() + "\t\t" + prof.getEmail() );
+                    System.out.println(prof.getNome() + "\t\t " + prof.getFormacao() + "\t\t" + prof.getEmail() );
                 }while(rs.next());
             }
 
@@ -267,4 +269,5 @@ public class Professor {
     public String toString() {
         return String.format("Nome: %-20s | Formação: %-10s | CIAP: %-5s | Email: %s", nome, formacao, ciap, email);
     }
+
 }

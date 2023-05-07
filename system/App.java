@@ -42,7 +42,7 @@ public class App {
                         break;
         
                         case 2: 
-                        System.out.println("ok");
+                        Professor.editarProfessor();
                         break;
         
                         case 3: 
@@ -172,7 +172,28 @@ public class App {
         
                     switch(opcao){
                         case 1: 
-                        System.out.println("ok");
+                        System.out.println("Digite o codigo da turma: ");
+                        String codturma = sc.nextLine();
+            
+            
+                        System.out.println("Digite o horario");
+                        String horario = sc.nextLine();
+            
+                        System.out.println("Semestre: ");
+                        int semestre = sc.nextInt();
+            
+                        sc.nextLine();
+                        System.out.println("Atribua o componente curricular: ");
+                        String cc = sc.nextLine();
+            
+                        if(ComponenteCurricular.verificacaoDeCodigo(ComponenteCurricular.buscarCodigoComponente(cc))){
+                            Turma turma = new Turma(codturma, horario, semestre, cc);
+                            turma.cadastrarTurma();
+                        }else{
+                            System.out.println("Componente não esta cadastrado");
+                        }
+            
+                        //Turma turma = new Turma(codturma, horario, semestre);
                         break;
         
                         case 2: 

@@ -202,6 +202,41 @@ public class ComponenteCurricular {
             return null;
         }
     }
+
+    public static String buscarCodigoComponente(String cod){
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "SELECT cod_componente FROM comp_curricular WHERE cod_componente = ?";
+            psmt = connection.prepareStatement(query);
+            psmt.setString(1, cod);
+             rs = psmt.executeQuery();
+
+             if (rs.next()) {
+                // Obter os dados do componente curricular a partir do ResultSet
+                String codComponente = rs.getString("cod_componente");
+                       
+                rs.close();
+                psmt.close();
+                connection.close();
+
+                return codComponente; 
+            
+            
+                // Faça o que for necessário com o objeto componente
+            } else {
+
+                return null;// Componente curricular não encontrado
+
+            }            
+
+        } catch (SQLException e) {
+           System.out.println(e.getMessage());
+            return null;
+        }
+    }
     
 //Esse método é utilizado para a impressão do componente obrigatório.
     public String mostrarTipoComponente() {
@@ -212,11 +247,18 @@ public class ComponenteCurricular {
         }
     }
 
+    public static boolean verificacaoDeCodigo(String cod){
+        if(cod == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public String toString() {
         return "ComponenteCurricular [codCompCurricular=" + codCompCurricular + ", nomeDisciplina=" + nomeDisciplina
-                + ", cargaHorariaComp=" + cargaHorariaComp + ", componenteObrigatorio=" + componenteObrigatorio + ", semestre="
+                + ", cargaHorariaComp=" + cargaHorariaComp + ", componente=" + componenteObrigatorio + ", semestre="
                 + semestre + "]";
     }
 
 }
-

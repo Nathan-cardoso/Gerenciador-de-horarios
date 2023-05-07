@@ -163,45 +163,7 @@ public class ComponenteCurricular {
         }
     }
 
-    public static ComponenteCurricular buscarComponente(String cod){
-        PreparedStatement psmt = null;
-        ResultSet rs = null;
 
-        try {
-            Connection connection = ElephantSQLConnection.getConnection();
-            String query = "SELECT * FROM comp_curricular WHERE cod_componente = ?";
-            psmt = connection.prepareStatement(query);
-            psmt.setString(1, cod);
-             rs = psmt.executeQuery();
-
-             if (rs.next()) {
-                // Obter os dados do componente curricular a partir do ResultSet
-                String codComponente = rs.getString("cod_componente");
-                String nomeDisciplina = rs.getString("nome_disciplina");
-                int cargaHorariaComp = rs.getInt("carga_horaria_comp");
-                boolean componenteObrigatorio = rs.getBoolean("comp_obrigatorio");
-                int semestre = rs.getInt("semestre");
-            
-                // Criar um objeto ComponenteCurricular com os dados obtidos
-                ComponenteCurricular componente = new ComponenteCurricular(codComponente, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
-            
-                rs.close();
-                psmt.close();
-                connection.close();
-
-                return componente;
-                // Faça o que for necessário com o objeto componente
-            } else {
-                return null;// Componente curricular não encontrado
-            }
-
-            
-
-        } catch (SQLException e) {
-           System.out.println(e.getMessage());
-            return null;
-        }
-    }
 
     public static String buscarCodigoComponente(String cod){
         PreparedStatement psmt = null;

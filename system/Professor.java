@@ -103,7 +103,7 @@ public class Professor {
                 pstmt.setString(1, ciap);
     
                 ResultSet rs = pstmt.executeQuery();
-            
+    
                 if (!rs.next()) {
                     System.out.println("Professor não encontrado.");
                 } else {
@@ -112,6 +112,7 @@ public class Professor {
                     System.out.println("2 - Formação");
                     System.out.println("3 - Email");
                     int opcao = scan.nextInt();
+                    scan.nextLine(); // Consumir quebra de linha
     
                     String campo = "";
                     switch(opcao) {
@@ -131,7 +132,7 @@ public class Professor {
     
                     if (!campo.equals("")) {
                         System.out.print("Digite o novo valor para " + campo + ": ");
-                        String novoValor = scan.next();
+                        String novoValor = scan.nextLine();
     
                         query = "UPDATE professor SET " + campo + "=? WHERE ciap=?";
                         pstmt = connection.prepareStatement(query);
@@ -143,10 +144,8 @@ public class Professor {
                         if (linhasAfetadas > 0) {
                             System.out.println("Professor atualizado com sucesso!");
                         } else {
-                                System.out.println("Erro ao atualizar professor.");
+                            System.out.println("Erro ao atualizar professor.");
                         }
-    
-                        scan.nextLine(); // Limpa o buffer do teclado
     
                         System.out.println("Deseja editar mais alguma informação do professor? (S/N)");
                         String resposta = scan.nextLine();
@@ -161,14 +160,15 @@ public class Professor {
                 rs.close();
                 pstmt.close();
                 connection.close();
-                scan.close();
+    
             } while (true);
-            
+    
+            scan.close();
     
         } catch (Exception e) {
             System.out.println("Erro ao editar professor: " + e.getMessage());
         }
-    }
+    }  
 
     // Metodo para ver dados de um professor
     public static void verDadosDeUmProfessor(String idProf){

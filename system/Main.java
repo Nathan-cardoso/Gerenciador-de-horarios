@@ -1,4 +1,4 @@
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -108,8 +108,8 @@ import java.util.Scanner;
                         System.out.println("1 - Nome");
                         System.out.println("2 - Formação");
                         System.out.println("3 - Email");
-                        System.out.println("4 - Carga Horária");
                         int opcao = scan.nextInt();
+                        scan.nextLine(); // Consumir quebra de linha
         
                         String campo = "";
                         switch(opcao) {
@@ -122,9 +122,6 @@ import java.util.Scanner;
                             case 3:
                                 campo = "email";
                                 break;
-                            case 4:
-                                campo = "carga_horaria";
-                                break;
                             default:
                                 System.out.println("Opção inválida.");
                                 break;
@@ -132,7 +129,7 @@ import java.util.Scanner;
         
                         if (!campo.equals("")) {
                             System.out.print("Digite o novo valor para " + campo + ": ");
-                            String novoValor = scan.next();
+                            String novoValor = scan.nextLine();
         
                             query = "UPDATE professor SET " + campo + "=? WHERE ciap=?";
                             pstmt = connection.prepareStatement(query);
@@ -147,24 +144,26 @@ import java.util.Scanner;
                                 System.out.println("Erro ao atualizar professor.");
                             }
         
-                            scan.nextLine(); // Limpa o buffer do teclado
-        
                             System.out.println("Deseja editar mais alguma informação do professor? (S/N)");
                             String resposta = scan.nextLine();
         
-                            if (!resposta.equalsIgnoreCase("S")) {
+                            if (!resposta.equalsIgnoreCase("S") && !resposta.equalsIgnoreCase("s")) {
+                                System.out.println("Professor atualizado com sucesso!");
                                 break;
-                            }
+                            }  
                         }
                     }
         
                     rs.close();
                     pstmt.close();
                     connection.close();
+        
                 } while (true);
+        
+                scan.close();
         
             } catch (Exception e) {
                 System.out.println("Erro ao editar professor: " + e.getMessage());
             }
-        }  
+        }       
     }           

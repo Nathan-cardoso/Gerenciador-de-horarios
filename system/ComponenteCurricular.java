@@ -247,13 +247,6 @@ public class ComponenteCurricular {
         }
     }
 
-    public static boolean verificacaoDeCodigo(String cod){
-        if(cod == null){
-            return false;
-        }else{
-            return true;
-        }
-    }
 
     public String toString() {
         return "ComponenteCurricular [codCompCurricular=" + codCompCurricular + ", nomeDisciplina=" + nomeDisciplina

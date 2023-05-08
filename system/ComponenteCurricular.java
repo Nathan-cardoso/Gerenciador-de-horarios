@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class ComponenteCurricular {
     private String codCompCurricular;
@@ -68,9 +69,113 @@ public class ComponenteCurricular {
         //Se tudo ok, o usuário será notificado que o componente foi cadastrado
     }
 
-    public void editarComponenteCurricular(){
+    public static void editarComponenteCurricular() {
+        try {
+            Scanner scan = new Scanner(System.in);
+    
+            System.out.println("Digite o código do componente curricular que deseja editar: ");
+            String cod_componente = scan.nextLine();
+    
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "SELECT * FROM comp_curricular WHERE cod_componente=?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, cod_componente);
+    
+            ResultSet rs = pstmt.executeQuery();
+    
+            if (!rs.next()) {
+                System.out.println("Componente curricular não encontrado.");
+            } else {
+                String codCompCurricular = rs.getString("cod_componente");
+                String nomeDisciplina = rs.getString("nome_disciplina");
+                int cargaHorariaComp = rs.getInt("carga_horaria_comp");
+                boolean componenteObrigatorio = rs.getBoolean("comp_obrigatorio");
+                int semestre = rs.getInt("semestre");
+    
+                //ComponenteCurricular CC = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
+    
+                System.out.println("Componente curricular encontrado:");
+                System.out.println("Código: " + codCompCurricular);
+                System.out.println("Disciplina: " + nomeDisciplina);
+                System.out.println("Carga Horária: " + cargaHorariaComp);
+                System.out.println("Componente Obrigatório: " + componenteObrigatorio);
+                System.out.println("Semestre: " + semestre);
+    
+                boolean continuar = true;
+                while (continuar) {
+                    System.out.println("\nDigite a opção que deseja editar: \n");
+                    System.out.println("1 - Nome da disciplina");
+                    System.out.println("2 - Carga horária");
+                    System.out.println("3 - Componente obrigatório");
+                    System.out.println("4 - Semestre");
+                    int opcao = scan.nextInt();
+                    scan.nextLine(); // Consumir quebra de linha
+    
+                    switch(opcao) {
+                        case 1:
+                            System.out.print("Digite o novo nome da disciplina: ");
+                            String novoNome = scan.nextLine();
+                            query = "UPDATE comp_curricular SET nome_disciplina=? WHERE cod_componente=?";
+                            pstmt = connection.prepareStatement(query);
+                            pstmt.setString(1, novoNome);
+                            pstmt.setString(2, cod_componente);
+                            break;
+                        case 2:
+                            System.out.print("Digite a nova carga horária: ");
+                            int novaCarga = scan.nextInt();
+                            scan.nextLine();
+                            query = "UPDATE comp_curricular SET carga_horaria_comp=? WHERE cod_componente=?";
+                            pstmt = connection.prepareStatement(query);
+                            pstmt.setInt(1, novaCarga);
+                            pstmt.setString(2, cod_componente);
+                            break;
+                        case 3:
+                            System.out.print("O componente é obrigatório? (S/N)");
+                            String resposta = scan.nextLine();
+                            boolean novoObrigatorio = resposta.equalsIgnoreCase("S");
+                            query = "UPDATE comp_curricular SET comp_obrigatorio=? WHERE cod_componente=?";
+                            pstmt = connection.prepareStatement(query);
+                            pstmt.setBoolean(1, novoObrigatorio);
+                            pstmt.setString(2, cod_componente);
+                            break;
+                        case 4:
+                            System.out.print("Digite o novo semestre: ");
+                            int novoSemestre = scan.nextInt();
+                            scan.nextLine();
+                            query = "UPDATE comp_curricular SET semestre=? WHERE cod_componente=?";
+                            pstmt = connection.prepareStatement(query);
+                            pstmt.setInt(1, novoSemestre);
+                            pstmt.setString(2, cod_componente);
+                            break;
+                    }
+                    
+                    int rowsAffected = pstmt.executeUpdate();
+    
+                    if (rowsAffected > 0) {
+                        System.out.println("Componente curricular atualizado com sucesso!");
+                    } else {
+                        System.out.println("Erro ao atualizar componente curricular.");
+                    }
 
+                    System.out.println("Deseja editar mais alguma informação do componente curricular? (S/N)");
+                    String resposta = scan.nextLine();
+
+                    if (!resposta.equalsIgnoreCase("S") && !resposta.equalsIgnoreCase("s")) {
+                        System.out.println("Componente curricular atualizado com sucesso!");
+                        break;
+                    }
+                }
+            }
+
+            rs.close();
+            pstmt.close();
+            connection.close();
+            scan.close();
+        } 
+     catch (Exception e) {
+        System.out.println("Erro ao editar componente curricular: " + e.getMessage());
     }
+}
 //Na classe executável o usuário vai passar o código do componente curricular
     public static void verDadosDeUmComponenteCurricular(String codComponenteCurricular){
         PreparedStatement psmt = null;
@@ -129,7 +234,7 @@ public class ComponenteCurricular {
                     int semestre = rs.getInt("semestre");
     
                     ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
-                    System.out.println(codCompCurricular.toUpperCase() + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente());
+                    System.out.println(componente);
                 } while (rs.next());
             }
     
@@ -211,9 +316,9 @@ public class ComponenteCurricular {
 
 
     public String toString() {
-        return "ComponenteCurricular [codCompCurricular=" + codCompCurricular + ", nomeDisciplina=" + nomeDisciplina
-                + ", cargaHorariaComp=" + cargaHorariaComp + ", componente=" + componenteObrigatorio + ", semestre="
-                + semestre + "]";
+        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio);
+        //return "ComponenteCurricular [codCompCurricular=" + codCompCurricular + ", nomeDisciplina=" + nomeDisciplina
+                //+ ", cargaHorariaComp=" + cargaHorariaComp + ", componente=" + componenteObrigatorio + ", semestre="
+                //+ semestre + "]";
     }
-
 }

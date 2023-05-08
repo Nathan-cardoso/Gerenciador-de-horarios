@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) {
         short opcao;
         Scanner sc = new Scanner(System.in);
-        ArrayList<ComponenteCurricular> componenteCurriculara= new ArrayList<>();
+        //ArrayList<ComponenteCurricular> componenteCurriculara= new ArrayList<>();
 
         do{
             Menu.menuPrincipal();
@@ -125,7 +125,7 @@ public class App {
                         break;
                         
                         case 2: 
-                       System.out.println(componenteCurriculara);
+                        ComponenteCurricular.editarComponenteCurricular();
 
                         break;
         

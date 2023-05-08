@@ -92,8 +92,6 @@ public class ComponenteCurricular {
                 boolean componenteObrigatorio = rs.getBoolean("comp_obrigatorio");
                 int semestre = rs.getInt("semestre");
     
-                //ComponenteCurricular CC = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
-    
                 System.out.println("Componente curricular encontrado:");
                 System.out.println("Código: " + codCompCurricular);
                 System.out.println("Disciplina: " + nomeDisciplina);
@@ -101,78 +99,66 @@ public class ComponenteCurricular {
                 System.out.println("Componente Obrigatório: " + componenteObrigatorio);
                 System.out.println("Semestre: " + semestre);
     
-                boolean continuar = true;
-                while (continuar) {
-                    System.out.println("\nDigite a opção que deseja editar: \n");
-                    System.out.println("1 - Nome da disciplina");
-                    System.out.println("2 - Carga horária");
-                    System.out.println("3 - Componente obrigatório");
-                    System.out.println("4 - Semestre");
-                    int opcao = scan.nextInt();
-                    scan.nextLine(); // Consumir quebra de linha
+                System.out.println("\nDigite a opção que deseja editar: \n");
+                System.out.println("1 - Nome da disciplina");
+                System.out.println("2 - Carga horária");
+                System.out.println("3 - Componente obrigatório");
+                System.out.println("4 - Semestre");
+                int opcao = scan.nextInt();
+                scan.nextLine(); // Consumir quebra de linha
     
-                    switch(opcao) {
-                        case 1:
-                            System.out.print("Digite o novo nome da disciplina: ");
-                            String novoNome = scan.nextLine();
-                            query = "UPDATE comp_curricular SET nome_disciplina=? WHERE cod_componente=?";
-                            pstmt = connection.prepareStatement(query);
-                            pstmt.setString(1, novoNome);
-                            pstmt.setString(2, cod_componente);
-                            break;
-                        case 2:
-                            System.out.print("Digite a nova carga horária: ");
-                            int novaCarga = scan.nextInt();
-                            scan.nextLine();
-                            query = "UPDATE comp_curricular SET carga_horaria_comp=? WHERE cod_componente=?";
-                            pstmt = connection.prepareStatement(query);
-                            pstmt.setInt(1, novaCarga);
-                            pstmt.setString(2, cod_componente);
-                            break;
-                        case 3:
-                            System.out.print("O componente é obrigatório? (S/N)");
-                            String resposta = scan.nextLine();
-                            boolean novoObrigatorio = resposta.equalsIgnoreCase("S");
-                            query = "UPDATE comp_curricular SET comp_obrigatorio=? WHERE cod_componente=?";
-                            pstmt = connection.prepareStatement(query);
-                            pstmt.setBoolean(1, novoObrigatorio);
-                            pstmt.setString(2, cod_componente);
-                            break;
-                        case 4:
-                            System.out.print("Digite o novo semestre: ");
-                            int novoSemestre = scan.nextInt();
-                            scan.nextLine();
-                            query = "UPDATE comp_curricular SET semestre=? WHERE cod_componente=?";
-                            pstmt = connection.prepareStatement(query);
-                            pstmt.setInt(1, novoSemestre);
-                            pstmt.setString(2, cod_componente);
-                            break;
-                    }
-                    
-                    int rowsAffected = pstmt.executeUpdate();
-    
-                    if (rowsAffected > 0) {
-                        System.out.println("Componente curricular atualizado com sucesso!");
-                    } else {
-                        System.out.println("Erro ao atualizar componente curricular.");
-                    }
-
-                    System.out.println("Deseja editar mais alguma informação do componente curricular? (S/N)");
-                    String resposta = scan.nextLine();
-
-                    if (!resposta.equalsIgnoreCase("S") && !resposta.equalsIgnoreCase("s")) {
-                        System.out.println("Componente curricular atualizado com sucesso!");
+                switch(opcao) {
+                    case 1:
+                        System.out.print("Digite o novo nome da disciplina: ");
+                        String novoNome = scan.nextLine();
+                        query = "UPDATE comp_curricular SET nome_disciplina=? WHERE cod_componente=?";
+                        pstmt = connection.prepareStatement(query);
+                        pstmt.setString(1, novoNome);
+                        pstmt.setString(2, cod_componente);
                         break;
-                    }
+                    case 2:
+                        System.out.print("Digite a nova carga horária: ");
+                        int novaCarga = scan.nextInt();
+                        scan.nextLine();
+                        query = "UPDATE comp_curricular SET carga_horaria_comp=? WHERE cod_componente=?";
+                        pstmt = connection.prepareStatement(query);
+                        pstmt.setInt(1, novaCarga);
+                        pstmt.setString(2, cod_componente);
+                        break;
+                    case 3:
+                        System.out.print("O componente é obrigatório? (S/N)");
+                        String resposta = scan.nextLine();
+                        boolean novoObrigatorio = resposta.equalsIgnoreCase("S");
+                        query = "UPDATE comp_curricular SET comp_obrigatorio=? WHERE cod_componente=?";
+                        pstmt = connection.prepareStatement(query);
+                        pstmt.setBoolean(1, novoObrigatorio);
+                        pstmt.setString(2, cod_componente);
+                        break;
+                    case 4:
+                        System.out.print("Digite o novo semestre: ");
+                        int novoSemestre = scan.nextInt();
+                        scan.nextLine();
+                        query = "UPDATE comp_curricular SET semestre=? WHERE cod_componente=?";
+                        pstmt = connection.prepareStatement(query);
+                        pstmt.setInt(1, novoSemestre);
+                        pstmt.setString(2, cod_componente);
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                        return;
                 }
-            }
-
-            rs.close();
-            pstmt.close();
+    
+                int rowsAffected = pstmt.executeUpdate();
+    
+                if (rowsAffected > 0) {
+                    System.out.println("Componente curricular atualizado com sucesso!");
+                }else{
+                    System.out.println("Erro na atualização do componente");
+                }
+                pstmt.close();
             connection.close();
-            scan.close();
-        } 
-     catch (Exception e) {
+        }
+    } catch (SQLException e) {
         System.out.println("Erro ao editar componente curricular: " + e.getMessage());
     }
 }

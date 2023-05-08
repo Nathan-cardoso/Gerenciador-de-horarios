@@ -145,24 +145,16 @@ public class Professor {
                         } else {
                             System.out.println("Erro ao atualizar professor.");
                         }
-   
-                        System.out.println("Deseja editar mais alguma informação do professor? (S/N)");
-                        String resposta = scan.nextLine();
-
-                        if (!resposta.equalsIgnoreCase("S") && !resposta.equalsIgnoreCase("s")) {
-                            System.out.println("Professor atualizado com sucesso!");
-                            break;
-                        }  
+                        break;
+                          
                     }
                 }
-   
                 rs.close();
                 pstmt.close();
                 connection.close();
-   
+                scan.close();
+                
             } while (true);
-   
-            scan.close();
    
         } catch (Exception e) {
             System.out.println("Erro ao editar professor: " + e.getMessage());

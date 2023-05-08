@@ -1,8 +1,10 @@
-//import java.sql.SQLException;
+import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.util.Scanner;
+
+import javax.sql.rowset.spi.SyncProvider;
 
 
 /*public class Main{
@@ -229,7 +231,7 @@ import java.util.Scanner;
          }       
      }*/
      
-     public class Main{
+     /*public class Main{
             public static void main(String[] args) {
                 editarComponenteCurricular();
             }
@@ -341,4 +343,68 @@ import java.util.Scanner;
                 System.out.println("Erro ao editar componente curricular: " + e.getMessage());
             }
         }
-    }
+    }*/
+
+    /*public class Main{
+        public static void main(String[] args) {
+            listarTurmas();
+        }
+        public static void listarTurmas() {
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+        
+            try {
+                Connection connection = ElephantSQLConnection.getConnection(); // obtém a conexão com o banco de dados
+                String query = "SELECT * FROM turma"; // query para selecionar todas as turmas
+                pstmt = connection.prepareStatement(query); // prepara a query para ser executada
+                rs = pstmt.executeQuery(); // executa a query e obtém os resultados
+        
+                if (!rs.next()) {
+                    System.out.println("Não há nenhuma turma cadastrada.");
+                } else {
+                    do {
+                        String codTurma = rs.getString("cod_turma");
+                        String codComponente = rs.getString("cod_componente");
+                        String horario= rs.getString("horario");
+                        int horarioAula = rs.getInt("horario_aula");
+                        int semestre = rs.getInt("semestre");
+                        
+                        Turma turma = new Turma(codTurma, horario, horarioAula, semestre, codComponente, horario);
+                        System.out.println(turma);
+                    } while (rs.next());
+                }
+        
+                pstmt.close();
+                connection.close();
+        
+            } catch (SQLException e) {
+                System.out.println("Erro ao listar turmas: " + e.getMessage());
+            }
+        }
+    }*/
+
+    /*public class Main{
+        public static void main(String[] args) {
+            excluirTurma("null");
+        }
+        public static void excluirTurma(String codTurma) {
+            PreparedStatement pstmt = null;
+        
+            try {
+                Connection connection = ElephantSQLConnection.getConnection();
+                pstmt = connection.prepareStatement("DELETE from turma where cod_turma = ?");
+                pstmt.setString(1, codTurma);
+                int qntLinhas = pstmt.executeUpdate();
+        
+                if (qntLinhas > 0) {
+                    System.out.println("Turma excluída com sucesso!");
+                } else {
+                    System.out.println("Turma não encontrada!");
+                }
+        
+            } catch (SQLException e) {
+                System.out.println("Erro ao excluir turma: " + e.getMessage());
+            }
+        }
+        
+    }*/

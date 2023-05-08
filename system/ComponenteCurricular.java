@@ -162,6 +162,7 @@ public class ComponenteCurricular {
         System.out.println("Erro ao editar componente curricular: " + e.getMessage());
     }
 }
+
 //Na classe executável o usuário vai passar o código do componente curricular
     public static void verDadosDeUmComponenteCurricular(String codComponenteCurricular){
         PreparedStatement psmt = null;

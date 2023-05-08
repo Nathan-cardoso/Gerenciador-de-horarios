@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -230,21 +230,34 @@ public class App {
                         break;
         
                         case 3: 
-                        System.out.println("ok");
+                        sc.nextLine();
+                        System.out.println("Digite o codigo da turma: ");
+                        String codTurma1 = sc.nextLine();
+                        Turma.verDadosDeUmaTurma(codTurma1);
                         break;
 
                         case 4: 
-                        System.out.println("ok");
+                        Turma.listarTurmas();
                         break;
         
                         case 5:
-                        System.out.println("ok");
+                        System.out.println("Digite o código da turma: ");
+                        sc.nextLine();
+                        String codTurma = sc.nextLine();
+                        System.out.println("\tDeseja excluir essa turma?\nConfirme a ação\n1 - sim\t outro número - não");
+                        short confirmacao = sc.nextShort();
+                        if(confirmacao == 1) {
+                            Turma.excluirTurma(codTurma);
+                        } else {
+                            System.out.println("Ação cancelada...");
+                        }
+
                         break;
 
                         case 6:
                         break;
                         default:
-                        System.out.println("Erro de digitação");
+                        System.out.println();
                         break;
                     }
                 }while(opcao != 6);

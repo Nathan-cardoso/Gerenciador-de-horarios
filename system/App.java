@@ -239,8 +239,16 @@ public class App {
                         case 4: 
                         Turma.listarTurmas();
                         break;
-        
+
                         case 5:
+                        System.out.println("ok");
+                        break;
+
+                        case 6:
+                        System.out.println("ok");
+                        break;
+
+                        case 7:
                         System.out.println("Digite o código da turma: ");
                         sc.nextLine();
                         String codTurma = sc.nextLine();
@@ -254,13 +262,14 @@ public class App {
 
                         break;
 
-                        case 6:
+                        case 8:
                         break;
+
                         default:
-                        System.out.println();
+                        System.out.println("Erro de digitação");
                         break;
                     }
-                }while(opcao != 6);
+                }while(opcao != 8);
                 break;
 
                 case 4:

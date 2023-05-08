@@ -23,7 +23,7 @@ public class Menu {
         System.out.println("|[1] - Cadastrar Professor\t |");
         System.out.println("|[2] - Editar Professor\t\t |");
         System.out.println("|[3] - Ver dados de um professor |");
-        System.out.println("|[4] - Listar Professor\t\t |");
+        System.out.println("|[4] - Listar Professores\t\t |");
         System.out.println("|[5] - Excluir professor\t |");
         System.out.println("|[6] - Voltar\t\t\t |\n");
     }
@@ -39,7 +39,7 @@ public class Menu {
         System.out.println("|[1] - Cadastrar Componente Curricular\t\t|");
         System.out.println("|[2] - Editar Componente Curricular\t\t|");
         System.out.println("|[3] - Ver dados de um Componente Curricular\t|");
-        System.out.println("|[4] - Listar Componente Curricular\t\t|");
+        System.out.println("|[4] - Listar Componentes Curriculares\t\t|");
         System.out.println("|[5] - Excluir Componente Curricular\t\t|");
         System.out.println("|[6] - Voltar\t\t\t\t\t|\n");
     }
@@ -57,9 +57,11 @@ public class Menu {
         System.out.println("|[1] - Cadastrar Turma\t\t|");
         System.out.println("|[2] - Editar Turma\t\t|");
         System.out.println("|[3] - Ver dados de uma Turma\t|");
-        System.out.println("|[4] - Listar Turma\t\t|");
-        System.out.println("|[5] - Excluir Turma\t\t|");
-        System.out.println("|[6] - Voltar\t\t\t|\n");
+        System.out.println("|[4] - Listar Turmas\t\t|");
+        System.out.println("|[5] - Listar por Semestre\t|");
+        System.out.println("|[6] - Listar por Professor\t|");
+        System.out.println("|[7] - Excluir Turma\t\t|");
+        System.out.println("|[8] - Voltar\t\t\t|\n");
 
     }
 

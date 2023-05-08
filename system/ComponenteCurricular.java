@@ -95,7 +95,7 @@ public class ComponenteCurricular {
                     int semestre = rs.getInt("semestre");
                     //Definida as variáveis que receberão os valores de cada campo...
                     ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre); //Será instânciado um objeto Componente para mostrar o componente
-                    System.out.println(codCompCurricular + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente()); //Saída.
+                    System.out.println(codCompCurricular.toUpperCase() + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente()); //Saída.
                 } while (rs.next());
             }
 
@@ -129,7 +129,7 @@ public class ComponenteCurricular {
                     int semestre = rs.getInt("semestre");
     
                     ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
-                    System.out.println(codCompCurricular + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente());
+                    System.out.println(codCompCurricular.toUpperCase() + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente());
                 } while (rs.next());
             }
     

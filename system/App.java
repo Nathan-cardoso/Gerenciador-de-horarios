@@ -172,28 +172,57 @@ public class App {
         
                     switch(opcao){
                         case 1: 
+                        int horario_aula;
+                        sc.nextLine();
                         System.out.println("Digite o codigo da turma: ");
                         String codturma = sc.nextLine();
             
             
-                        System.out.println("Digite o horario");
+                        System.out.println("Informe o turno");
                         String horario = sc.nextLine();
+                        if (horario.equalsIgnoreCase("manha")) {
+                            Menu.exibirHorariosManha();
+                            System.out.println("Digite o horario da aula: ");
+                             horario_aula = sc.nextInt();
+                            if(horario_aula < 1 || horario_aula > 6){
+                                System.out.println("Horario não é disponivel");
+                                return;
+                            }
+                        } else if (horario.equalsIgnoreCase("tarde")) {
+                            Menu.exibirHorariosTarde();
+                            System.out.println("Digite o horario da aula: ");
+                             horario_aula = sc.nextInt();
+                            if(horario_aula < 1 || horario_aula > 6){
+                                System.out.println("Horario não é disponivel");
+                                return;
+                            }
+                        } else if (horario.equalsIgnoreCase("noite")) {
+                            Menu.exibirHorariosNoite();
+                            System.out.println("Digite o horario da aula: ");
+                             horario_aula = sc.nextInt();
+                            if(horario_aula < 1 || horario_aula > 6){
+                                System.out.println("Horario não é disponivel");
+                                return;
+                            }
+                        } else {
+                            System.out.println("Turno inválido.");
+                            return;
+                        }
             
                         System.out.println("Semestre: ");
                         int semestre = sc.nextInt();
             
                         sc.nextLine();
-                        System.out.println("Atribua o componente curricular: ");
-                        String cc = sc.nextLine();
+                        System.out.println("Atribua o componente curricular digitando o seu codigo: ");
+                        String codCC = sc.nextLine();
             
-                        if(verificacaoDeCodigo(ComponenteCurricular.buscarCodigoComponente(cc))){
-                            Turma turma = new Turma(codturma, horario, semestre, cc);
-                            turma.cadastrarTurma();
-                        }else{
-                            System.out.println("Componente não esta cadastrado");
-                        }
             
-                        //Turma turma = new Turma(codturma, horario, semestre);
+                                    System.out.println("Para atribuir um professor a turma, digite seu ciap: ");
+            
+                                    String codProf = sc.nextLine();
+                                    
+                                        Turma turma = new Turma(codturma, horario,horario_aula, semestre, codCC,codProf);
+                                        Turma.cadastrarTurma(turma);
                         break;
         
                         case 2: 
@@ -242,8 +271,6 @@ public class App {
             return true;
         }
     }
-
-
 
 
 }

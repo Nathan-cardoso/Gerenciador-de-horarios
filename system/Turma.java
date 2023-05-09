@@ -215,9 +215,42 @@ public class Turma {
         
     }
 
-    public static void listarTurmasPorProfessor(){
-        
+    public static void listarTurmasPorProfessor(String ciapProf){
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+            String query = "SELECT t.*, p.nome FROM turma t JOIN professor p ON t.ciap_professor = p.ciap WHERE t.ciap_professor = ? ";
+            pstm = connection.prepareStatement(query);
+            pstm.setString(1, ciapProf);
+            rs = pstm.executeQuery();
+            
+            if(!rs.next()){ 
+                System.out.println("Professor não tem nenhuma turma ");
+            }else{
+
+                do{
+                    String idTurma = rs.getString("cod_turma");
+                    String codComponente = rs.getString("cod_componente");
+                    String horario = rs.getString("horario");
+                    int horarioAula = rs.getInt("horario_aula");
+                    int semestre = rs.getInt("semestre");
+                    String codProf = rs.getString("ciap_professor");
+                    String nomeProf = rs.getString("nome");
+                    Turma turma = new Turma(idTurma, horario, horarioAula, semestre, codComponente, codProf);
+                    System.out.println("Turma ministrada por: " + nomeProf + " " + turma);
+                }while(rs.next());
+            }
+
+            connection.close();
+            rs.close();
+            pstm.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
+
+
     public static void excluirTurma(String codTurma) {
         PreparedStatement pstmt = null;
     

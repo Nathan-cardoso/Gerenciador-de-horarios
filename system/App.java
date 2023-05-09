@@ -241,7 +241,9 @@ public class App {
                         break;
 
                         case 5:
-                        System.out.println("ok");
+                        System.out.println("Digite o Semestre: ");
+                        int semestreturma = sc.nextInt();
+                        Turma.listarTurmasPorSemestre(semestreturma);
                         break;
 
                         case 6:

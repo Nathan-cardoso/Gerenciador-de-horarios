@@ -211,8 +211,44 @@ public class Turma {
     }
     
 
-    public static void listarTurmasPorSemestre(){
-        
+    public static void listarTurmasPorSemestre(int semestre) {
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+    
+        try {
+            Connection connection = ElephantSQLConnection.getConnection(); //Iniciando a conexão com o banco
+            String querySearch = "SELECT * FROM turma WHERE semestre = ?"; //Query para buscar as turmas pelo semestre digitado.
+            psmt = connection.prepareStatement(querySearch); //executando a query.
+            psmt.setInt(1, semestre); //Substituindo o ? da query pelo conteúdo da variável, assim a query vai direto ao semestre
+            rs = psmt.executeQuery(); //resultSet representa o resultado da consultado da query em psmt
+    
+            if (!rs.next()) { //Se o rs estiver vazio é porque não tem turmas com o semestre digitado.
+                System.out.println("Não foram encontradas turmas para o semestre " + semestre);
+            } else {
+                //Criando a tabela de turmas
+                System.out.printf("%-12s%-20s%-20s%-15s%-30s%-20s%n", "Código", "Componente", "Horário", "Horário de Aula", "Professor", "Semestre");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------");
+                do {
+                    //rs possibilita armazenar em variáveis os resultados da query.
+                    String idTurma = rs.getString("cod_turma");
+                    String codComponente = rs.getString("cod_componente");
+                    String horario = rs.getString("horario");
+                    int horarioAula = rs.getInt("horario_aula");
+                    String codProf = rs.getString("ciap_professor");
+                    int semestreTurma = rs.getInt("semestre");
+    
+                    //Imprimindo as informações da turma na tabela
+                    System.out.printf("%-12s%-20s%-20s%-15d%-30s%-20d%n", idTurma, codComponente, horario, horarioAula, codProf, semestreTurma);
+                } while (rs.next());
+            }
+    
+            //Fechando a conexão
+            connection.close();
+            rs.close();
+            psmt.close();
+        } catch (java.sql.SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void listarTurmasPorProfessor(String ciapProf){

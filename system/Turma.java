@@ -226,7 +226,7 @@ public class Turma {
                 System.out.println("Não foram encontradas turmas para o semestre " + semestre);
             } else {
                 //Criando a tabela de turmas
-                System.out.printf("%-12s%-20s%-20s%-15s%-30s%-20s%n", "Código", "Componente", "Horário", "Horário de Aula", "Professor", "Semestre");
+                System.out.printf("%-12s%-20s%-16s%-15s%-25s%-20s%n", "Código", "Componente", "Turno", "Horário", "Ciap Professor", "Semestre");
                 System.out.println("-------------------------------------------------------------------------------------------------------------------");
                 do {
                     //rs possibilita armazenar em variáveis os resultados da query.
@@ -238,7 +238,7 @@ public class Turma {
                     int semestreTurma = rs.getInt("semestre");
     
                     //Imprimindo as informações da turma na tabela
-                    System.out.printf("%-12s%-20s%-20s%-15d%-30s%-20d%n", idTurma, codComponente, horario, horarioAula, codProf, semestreTurma);
+                    System.out.printf("%-12s%-20s%-20s%-15d%-25s%-20d%n", idTurma, codComponente, horario, horarioAula, codProf, semestreTurma);
                 } while (rs.next());
             }
     

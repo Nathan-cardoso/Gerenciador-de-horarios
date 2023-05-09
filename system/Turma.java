@@ -6,7 +6,7 @@ import java.sql.SQLException;
 /*
 Uma turma pode ter vários professores
 Pode haver mais de uma turma do mesmo componente curricular
-Turmas do mesmo semestre não podem ter o mesmo horário
+    Turmas do mesmo semestre não podem ter o mesmo horário
 Turmas ministradas por um mesmo professor não podem ter o mesmo horário
  */
 public class Turma {
@@ -65,62 +65,49 @@ public class Turma {
 
     public static void cadastrarTurma(Turma turma) {
         PreparedStatement pstm = null;
-    
+        ResultSet rs = null;
         try {
             Connection connection = ElephantSQLConnection.getConnection();
     
-            // Verifica se já existe uma turma com o mesmo componente curricular, semestre e horário
-            String query = "SELECT * FROM turma WHERE cod_componente = ? AND semestre = ? AND horario = ?";
+            // Verifica se já existe uma turma com o mesmo horário e semestre
+            String query = "SELECT * FROM turma WHERE horario = ? AND semestre = ? AND horario_aula = ?";
             pstm = connection.prepareStatement(query);
-            pstm.setString(1, turma.getCodComponente());
+            pstm.setString(1, turma.getHorario());
             pstm.setInt(2, turma.getSemestre());
-            pstm.setString(3, turma.getHorario());
-            ResultSet rs = pstm.executeQuery();
+            pstm.setInt(3, turma.getHorarioAula());
+            rs = pstm.executeQuery();
     
             if (rs.next()) {
-                System.out.println("Já existe uma turma cadastrada para o mesmo componente curricular e horário no semestre.");
+                System.out.println("Erro! Já existe uma turma com o mesmo horário e semestre.");
             } else {
-                // Nenhuma turma encontrada, pode cadastrar a nova turma
-    
-                // Verifica se o componente curricular e a turma possuem o mesmo semestre
-                query = "SELECT * FROM comp_curricular WHERE cod_componente = ? AND semestre = ?";
+                // Verifica se o professor já possui uma turma no mesmo horário
+                query = "SELECT * FROM turma WHERE ciap_professor = ? AND horario = ? AND horario_aula = ?";
                 pstm = connection.prepareStatement(query);
-                pstm.setString(1, turma.getCodComponente());
-                pstm.setInt(2, turma.getSemestre());
+                pstm.setString(1, turma.getCodProf());
+                pstm.setString(2, turma.getHorario());
+                pstm.setInt(3, turma.getHorarioAula());
                 rs = pstm.executeQuery();
     
-                if (!rs.next()) {
-                    System.out.println("O componente curricular e a turma não possuem o mesmo semestre.");
+                if (rs.next()) {
+                    System.out.println("Erro! O professor já possui uma turma no mesmo horário.");
                 } else {
-                    // Verifica se o professor já está dando aula em outro horário
-                    query = "SELECT * FROM turma WHERE ciap_professor = ? AND horario = ? AND semestre = ?";
+                    // Pode cadastrar a nova turma
+                    query = "INSERT INTO turma (cod_turma, horario, horario_aula, semestre, cod_componente, ciap_professor) VALUES (?,?,?,?,?,?)";
                     pstm = connection.prepareStatement(query);
-                    pstm.setString(1, turma.getCodProf());
+    
+                    pstm.setString(1, turma.getCodTurma());
                     pstm.setString(2, turma.getHorario());
-                    pstm.setInt(3, turma.getSemestre());
-                    rs = pstm.executeQuery();
+                    pstm.setInt(3, turma.getHorarioAula());
+                    pstm.setInt(4, turma.getSemestre());
+                    pstm.setString(5, turma.getCodComponente());
+                    pstm.setString(6, turma.getCodProf());
     
-                    if (rs.next()) {
-                        System.out.println("O professor já está dando aula em outro horário.");
+                    int linhasAfetadas = pstm.executeUpdate();
+    
+                    if (linhasAfetadas > 0) {
+                        System.out.println("Turma cadastrada com sucesso.");
                     } else {
-                        // Pode cadastrar a nova turma
-                        query = "INSERT INTO turma (cod_turma, horario, horario_aula, semestre, cod_componente, ciap_professor) VALUES (?,?,?,?,?,?)";
-                        pstm = connection.prepareStatement(query);
-    
-                        pstm.setString(1, turma.getCodTurma());
-                        pstm.setString(2, turma.getHorario());
-                        pstm.setInt(3, turma.getHorarioAula());
-                        pstm.setInt(4, turma.getSemestre());
-                        pstm.setString(5, turma.getCodComponente());
-                        pstm.setString(6, turma.getCodProf());
-    
-                        int linhasAfetadas = pstm.executeUpdate();
-    
-                        if (linhasAfetadas > 0) {
-                            System.out.println("Turma cadastrada com sucesso.");
-                        } else {
-                            System.out.println("Erro no cadastro da turma.");
-                        }
+                        System.out.println("Erro no cadastro da turma.");
                     }
                 }
             }
@@ -133,6 +120,7 @@ public class Turma {
             System.out.println("Erro ao cadastrar turma: " + e.getMessage());
         }
     }
+     
 
     public static void editarTurma(){
         

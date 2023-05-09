@@ -245,7 +245,10 @@ public class App {
                         break;
 
                         case 6:
-                        System.out.println("ok");
+                        sc.nextLine();
+                        System.out.println("Informe o ciap do professor: ");
+                        String ciapParaListar = sc.nextLine();
+                        Turma.listarTurmasPorProfessor(ciapParaListar);
                         break;
 
                         case 7:

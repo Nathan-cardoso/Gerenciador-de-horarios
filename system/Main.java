@@ -8,7 +8,10 @@ import javax.sql.rowset.spi.SyncProvider;
 
 public class Main{
     public static void main(String[] args) {
-        Menu.menuTurma();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Informe o ciap do professor: ");
+        String ciapParaListar = scan.nextLine();
+        Turma.listarTurmasPorProfessor(ciapParaListar);
     }
 }
 /*public class Main{

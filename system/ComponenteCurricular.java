@@ -301,11 +301,12 @@ public class ComponenteCurricular {
         }
     }
 
-
+@Override
     public String toString() {
-        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio);
-        //return "ComponenteCurricular [codCompCurricular=" + codCompCurricular + ", nomeDisciplina=" + nomeDisciplina
-                //+ ", cargaHorariaComp=" + cargaHorariaComp + ", componente=" + componenteObrigatorio + ", semestre="
-                //+ semestre + "]";
+        if(componenteObrigatorio){
+        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
+        }else{
+            return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
+        }
     }
 }

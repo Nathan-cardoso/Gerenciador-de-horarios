@@ -3,11 +3,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/*
-Uma turma pode ter vários professores
-Pode haver mais de uma turma do mesmo componente curricular
+/*Restrições que devem ser respeitadas
+
+    Pode haver mais de uma turma do mesmo componente curricular
     Turmas do mesmo semestre não podem ter o mesmo horário
-Turmas ministradas por um mesmo professor não podem ter o mesmo horário
+    Turmas ministradas por um mesmo professor não podem ter o mesmo horário
  */
 public class Turma {
     private String codTurma;
@@ -17,6 +17,7 @@ public class Turma {
     private int horarioAula;
     private int semestre;
 
+    //Construtor
     public Turma(String codTurma, String horario,int horarioAula, int semestre,String codComponente, String codProf) {
         this.codTurma = codTurma;
         this.horario = horario;
@@ -26,32 +27,32 @@ public class Turma {
         this.codProf = codProf;
     }
 
-    
+    //get para acessar o código da turma
     public String getCodTurma() {
         return codTurma;
     }
 
-
+    //get para acessar o código do professor
     public String getCodProf() {
         return codProf;
     }
 
-
+    //get para acessar o código do componente
     public String getCodComponente() {
         return codComponente;
     }
 
-
+    //get para acessar o horário que se refere ao turno
     public String getHorario() {
         return horario;
     }
 
-
+    //get para acessar o horario aula
     public int getHorarioAula() {
         return horarioAula;
     }
 
-
+    //get para acessar o semestre
     public int getSemestre() {
         return semestre;
     }
@@ -62,47 +63,60 @@ public class Turma {
     }
 
 
-
+    //Esse método cadastrar a turma passando os dados para o banco de dados
     public static void cadastrarTurma(Turma turma) {
+
         PreparedStatement pstm = null;
         ResultSet rs = null;
+
         try {
-            Connection connection = ElephantSQLConnection.getConnection();
+
+            Connection connection = ElephantSQLConnection.getConnection(); //Estabelecendo a conexão com o banco
     
             // Verifica se já existe uma turma com o mesmo horário e semestre
-            String query = "SELECT * FROM turma WHERE horario = ? AND semestre = ? AND horario_aula = ?";
+            String query = "SELECT * FROM turma WHERE horario = ? AND semestre = ? AND horario_aula = ?"; //Essa query procura no banco alguma turma com o semestre, horario e hora_aula igual ao que foi passado pelo usuário.
             pstm = connection.prepareStatement(query);
             pstm.setString(1, turma.getHorario());
             pstm.setInt(2, turma.getSemestre());
             pstm.setInt(3, turma.getHorarioAula());
-            rs = pstm.executeQuery();
+
+            rs = pstm.executeQuery();//rs para percorrer os resudados da consulta que foram executados através do método executeQuery.
     
-            if (rs.next()) {
+            if (rs.next()) { //Se  rs não estiver vázia significa que o banco já tem uma turma com o mesmo semestre, horario e horario_aula.
+
                 System.out.println("Erro! Já existe uma turma com o mesmo horário e semestre.");
+
             } else {
                 // Verifica se o professor já possui uma turma no mesmo horário
-                query = "SELECT * FROM turma WHERE ciap_professor = ? AND horario = ? AND horario_aula = ?";
+                query = "SELECT * FROM turma WHERE ciap_professor = ? AND horario = ? AND horario_aula = ?"; //Essa query lista as tabelas com o ciap, horario e horario aula fornecido pelo usuário.
                 pstm = connection.prepareStatement(query);
                 pstm.setString(1, turma.getCodProf());
                 pstm.setString(2, turma.getHorario());
                 pstm.setInt(3, turma.getHorarioAula());
-                rs = pstm.executeQuery();
+
+                rs = pstm.executeQuery();//rs para percorrer os resudados da consulta que foram executados através do método executeQuery.
     
-                if (rs.next()) {
+                if (rs.next()) {//Nesse caso, se rs não estiver vázio é porque o professor já está dando aula no turno(horario) e horario_aula.
+
                     System.out.println("Erro! O professor já possui uma turma no mesmo horário.");
+
                 } else {
-                                    // Verifica se o semestre da turma é igual ao semestre do componente curricular
-                query = "SELECT * FROM comp_curricular WHERE cod_componente = ? AND semestre = ?";
+                // Verifica se o semestre da turma é igual ao semestre do componente curricular
+                query = "SELECT * FROM comp_curricular WHERE cod_componente = ? AND semestre = ?"; //Essa query mostra o semestre do componente curricular que é igual ao semestre que o usuário passou para a turma
                 pstm = connection.prepareStatement(query);
                 pstm.setString(1, turma.getCodComponente());
                 pstm.setInt(2, turma.getSemestre());
-                rs = pstm.executeQuery();
 
-                if (!rs.next()) {
+                rs = pstm.executeQuery();//rs para percorrer os resudados da consulta que foram executados através do método executeQuery.
+
+                if (!rs.next()) { //Nesse caso, se o semestre da turma não corresponder ao do componente não será possível cadastrar.
+
                     System.out.println("Erro! O componente curricular não possui um semestre correspondente.");
-                }else {
+
+                }else {//Depois de verificar todas as condições...
                     // Pode cadastrar a nova turma
                     query = "INSERT INTO turma (cod_turma, horario, horario_aula, semestre, cod_componente, ciap_professor) VALUES (?,?,?,?,?,?)";
+                    //Essa query insere os valores passados.
                     pstm = connection.prepareStatement(query);
     
                     pstm.setString(1, turma.getCodTurma());
@@ -114,7 +128,7 @@ public class Turma {
     
                     int linhasAfetadas = pstm.executeUpdate();
     
-                    if (linhasAfetadas > 0) {
+                    if (linhasAfetadas > 0) {//Verificação se foi possível cadastrar.
                         System.out.println("Turma cadastrada com sucesso.");
                     } else {
                         System.out.println("Erro no cadastro da turma.");
@@ -122,7 +136,7 @@ public class Turma {
                 }
             }
         }
-    
+            //fechando as variáveis de conexão
             pstm.close();
             rs.close();
             connection.close();
@@ -137,6 +151,7 @@ public class Turma {
         
     }
 
+    //Esse método recebe do usuário o código da turma que ele deseja ver os dados.
     public static void verDadosDeUmaTurma(String codTurma){
         PreparedStatement psmt = null;
         ResultSet rs = null;
@@ -175,7 +190,7 @@ public class Turma {
     }
     
     
-
+    //Esse método lista todas as turmas que estão cadastradas no banco de dados.
     public static void listarTurmas() {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -190,27 +205,30 @@ public class Turma {
                 System.out.println("Não há nenhuma turma cadastrada.");
             } else {
                 do {
+
                     String codTurma = rs.getString("cod_turma");
                     String codComponente = rs.getString("cod_componente");
                     String horario = rs.getString("horario");
                     int horarioAula = rs.getInt("horario_aula");
                     int semestre = rs.getInt("semestre");
                     
-                    
+                    //Criando o objeto que ira assumir os valores
                     Turma turma = new Turma(codTurma, horario, horarioAula, semestre, codComponente, horario);
                     System.out.println(turma);
+                    //Saída.
                 } while (rs.next());
+
             }
-    
+        //fechando as variáveis de conexão
             pstmt.close();
             connection.close();
-    
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Erro ao listar turmas: " + e.getMessage());
         }
     }
     
-
+    //O usuário irá digitar o semestre e irá ser impresso todas as turmas daquele semestre.
     public static void listarTurmasPorSemestre(int semestre) {
         PreparedStatement psmt = null;
         ResultSet rs = null;
@@ -251,21 +269,27 @@ public class Turma {
         }
     }
 
+    //Usuário irá passar o ciap do professor e então o método retornará as turmas que o professor equivalente ao ciap ministra.
     public static void listarTurmasPorProfessor(String ciapProf){
         PreparedStatement pstm = null;
         ResultSet rs = null;
+
         try {
-            Connection connection = ElephantSQLConnection.getConnection();
-            String query = "SELECT t.*, p.nome FROM turma t JOIN professor p ON t.ciap_professor = p.ciap WHERE t.ciap_professor = ? ";
+
+            Connection connection = ElephantSQLConnection.getConnection(); //Variável que estabele a conexão com o banco de dados
+            String query = "SELECT t.*, p.nome FROM turma t JOIN professor p ON t.ciap_professor = p.ciap WHERE t.ciap_professor = ? "; //Essa query vai fazer a junção das tabelas turma e professor e irá listar todas as turmas que o professor ministra
             pstm = connection.prepareStatement(query);
             pstm.setString(1, ciapProf);
             rs = pstm.executeQuery();
             
-            if(!rs.next()){ 
+            if(!rs.next()){ //Caso a tabela esteja vázia é porque o professor não tem nenhuma turma atribuida a ele.
+
                 System.out.println("Professor não tem nenhuma turma ");
+
             }else{
 
                 do{
+
                     String idTurma = rs.getString("cod_turma");
                     String codComponente = rs.getString("cod_componente");
                     String horario = rs.getString("horario");
@@ -276,8 +300,9 @@ public class Turma {
                     Turma turma = new Turma(idTurma, horario, horarioAula, semestre, codComponente, codProf);
                     System.out.println("Turma ministrada por: " + nomeProf + " " + turma);
                 }while(rs.next());
-            }
 
+            }
+        //fechando as variáveis de conexão
             connection.close();
             rs.close();
             pstm.close();
@@ -286,17 +311,20 @@ public class Turma {
         }
     }
 
-
+    //O usuário irá passar o código da turma e o método irá excluilá. 
     public static void excluirTurma(String codTurma) {
         PreparedStatement pstmt = null;
     
         try {
+
             Connection connection = ElephantSQLConnection.getConnection();
-            pstmt = connection.prepareStatement("DELETE from turma where cod_turma = ?");
+            pstmt = connection.prepareStatement("DELETE from turma where cod_turma = ?"); //Essa query excluí a tupla em que aparece o código da turma passado pelo usuário.
+
             pstmt.setString(1, codTurma);
+
             int qntLinhas = pstmt.executeUpdate();
     
-            if (qntLinhas > 0) {
+            if (qntLinhas > 0) {//Verificação se foi excluída com sucesso.
                 System.out.println("Turma excluída com sucesso!");
             } else {
                 System.out.println("Turma não encontrada!");
@@ -308,7 +336,7 @@ public class Turma {
     }
     
     @Override
-    public String toString() {
+    public String toString() { 
         return String.format("codigo: %-5s | Componente: %-5s | Turno: %-5s | Horario: %s | Semestre: %s", codTurma, codComponente, horario, horarioAula, semestre);
     }
 }

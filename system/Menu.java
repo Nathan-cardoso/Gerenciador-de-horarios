@@ -1,5 +1,5 @@
 public class Menu {
-    
+    //Menu principal do programa
     public static void menuPrincipal(){
         System.out.println("\n|============ Menu =============|");
         System.out.println("| [1] - Professor\t\t|");
@@ -11,14 +11,14 @@ public class Menu {
 
     }
 
-
+//Menu de exibição da área do professor 
     public static void menuProf() {
         /*Cadastrar Professor
             Editar Professor
             Ver dados de um Professor
             Listar Professores
             Excluir Professor
- */
+        */
         System.out.println("\n|========== Professor ===========|");
         System.out.println("|[1] - Cadastrar Professor\t |");
         System.out.println("|[2] - Editar Professor\t\t |");
@@ -28,13 +28,15 @@ public class Menu {
         System.out.println("|[6] - Voltar\t\t\t |\n");
     }
 
+    //Menu de exibição para a área do componente curricular.
     public static void menuCompCurricular(){
+
         /*Cadastrar Componente Curricular
         Editar Componente Curricular
         Ver dados de um Componente Curricular
         Listar Componentes Curriculares
         Excluir Componente Curricular
- */
+        */
         System.out.println("\n|=========== Componete Curricular ==============|");
         System.out.println("|[1] - Cadastrar Componente Curricular\t\t|");
         System.out.println("|[2] - Editar Componente Curricular\t\t|");
@@ -42,8 +44,10 @@ public class Menu {
         System.out.println("|[4] - Listar Componentes Curriculares\t\t|");
         System.out.println("|[5] - Excluir Componente Curricular\t\t|");
         System.out.println("|[6] - Voltar\t\t\t\t\t|\n");
+
     }
 
+    //Menu para a exibição da Área de turmas
     public static void menuTurma(){
         /*Cadastrar Turma
         Editar Turma
@@ -65,29 +69,38 @@ public class Menu {
 
     }
 
+        //Exibe os horários de aulas do turno da manhã. Menu feito para ajudar o usário na escolha dos horários
     public static void exibirHorariosManha(){
+
         System.out.println("1 - 07h00 - 07h55");
         System.out.println("2 - 07h55 - 08h50");
         System.out.println("3 - 08h50 - 09h45");
         System.out.println("4 - 09h55 - 10h50");
         System.out.println("5 - 10h50 - 11h45");
         System.out.println("6 - 11h45 - 12h40");
+
     }
 
+        //Exibe os horários de aulas do turno da tarde. Menu feito para ajudar o usário na escolha dos horários
     public static void exibirHorariosTarde(){
+
         System.out.println("1 - 13h00 - 13h55");
         System.out.println("2 - 13h55 - 14h50");
         System.out.println("3 - 14h50 - 15h45");
         System.out.println("4 - 15h45 - 16h50");
         System.out.println("5 - 16h50 - 17h45");
         System.out.println("6 - 17h45 - 18h40");
+
     }
 
+        //Exibe os horários de aulas do turno da tarde. Menu feito para ajudar o usário na escolha dos horários
     public static void exibirHorariosNoite(){
+
         System.out.println("1 - 18h50 - 19h45");
         System.out.println("2 - 19h45 - 20h40");
         System.out.println("3 - 20h50 - 21h35");
         System.out.println("4 - 21h35 - 22h30");
+
     }
 
 

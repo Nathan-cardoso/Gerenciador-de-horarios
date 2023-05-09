@@ -28,14 +28,15 @@ public class ComponenteCurricular {
     }
 
     
-
+    //Criando um get para acessar o código com componente futuramente 
     public String getCodCompCurricular() {
         return codCompCurricular;
     }
 
-
+    //O método realiza o cadastro do professor e armazena no banco de dados.
     public void cadastrarComponenteCurricular(){
         try{
+
         Connection connection = ElephantSQLConnection.getConnection();
         String query = "INSERT INTO comp_curricular (cod_componente, nome_disciplina, carga_horaria_comp, comp_obrigatorio, semestre) VALUES (?,?,?,?,?)"; //A váriável query é utilizada para guardar o comando a ser passado no PreparedStatement
         PreparedStatement pmst = connection.prepareStatement(query); //PreparedStatement é um sub-classe que permite os comandos do sql.
@@ -69,6 +70,7 @@ public class ComponenteCurricular {
         //Se tudo ok, o usuário será notificado que o componente foi cadastrado
     }
 
+    //Esse método irá editar o componente curricular com base no código fornecido.
     public static void editarComponenteCurricular() {
         try {
             Scanner scan = new Scanner(System.in);
@@ -77,15 +79,18 @@ public class ComponenteCurricular {
             String cod_componente = scan.nextLine();
     
             Connection connection = ElephantSQLConnection.getConnection();
-            String query = "SELECT * FROM comp_curricular WHERE cod_componente=?";
+            String query = "SELECT * FROM comp_curricular WHERE cod_componente=?"; //Verificação se existe o componente curricular.
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, cod_componente);
     
             ResultSet rs = pstmt.executeQuery();
     
             if (!rs.next()) {
+
                 System.out.println("Componente curricular não encontrado.");
+
             } else {
+
                 String codCompCurricular = rs.getString("cod_componente");
                 String nomeDisciplina = rs.getString("nome_disciplina");
                 int cargaHorariaComp = rs.getInt("carga_horaria_comp");
@@ -145,39 +150,46 @@ public class ComponenteCurricular {
                         break;
                     default:
                         System.out.println("Opção inválida.");
-                        return;
+                        
+                        break;
                 }
     
-                int rowsAffected = pstmt.executeUpdate();
+                int rowsAffected = pstmt.executeUpdate(); // O comando executeUpdate retorna as linhas que foram atualizadas
     
-                if (rowsAffected > 0) {
+                if (rowsAffected > 0) {//Fazendo a verificação se o compone foi atualizado
                     System.out.println("Componente curricular atualizado com sucesso!");
                 }else{
                     System.out.println("Erro na atualização do componente");
                 }
-                pstmt.close();
+
+            //Fechando as conexões para evitar erros futuros 
+            pstmt.close();
             connection.close();
+            scan.close();
         }
-    } catch (SQLException e) {
+    } catch (SQLException e) {//Tratamento de exeção 
         System.out.println("Erro ao editar componente curricular: " + e.getMessage());
     }
 }
 
-//Na classe executável o usuário vai passar o código do componente curricular
+//Na classe executável o usuário vai passar o código do componente curricular e então será mostrado os dados do componente.
     public static void verDadosDeUmComponenteCurricular(String codComponenteCurricular){
+        //Iniciando as variáveis
         PreparedStatement psmt = null;
         ResultSet rs = null;
 
         try {
+
             Connection connection = ElephantSQLConnection.getConnection(); //Inciando a conexão com o banco.
             String querySearch = "SELECT * FROM comp_curricular WHERE  cod_componente = ?"; //Query para buscar o componente pelo código digitado.
             psmt = connection.prepareStatement(querySearch); //executando a query.
             psmt.setString(1, codComponenteCurricular);//Subistituindo o ? da query pelo conteudo da variável, assim a query vai direto ao codComp
             rs = psmt.executeQuery(); //resultSet representa o resultado da consultado da query em psmt
 
-            if (!rs.next()) /*Se o rs estiver vázia é porque não tem um componente com o código digitado*/{//verificação
+            if (!rs.next()) {//Se o rs estiver vázia é porque não tem um componente com o código digitado
                 System.out.println("Esse código do componente curricular é inválido .");
             } else{
+
                 do {
                     //rs possibilita armazenar em variáveis os resultados da query.
                     String codCompCurricular = rs.getString("cod_componente");
@@ -186,9 +198,13 @@ public class ComponenteCurricular {
                     boolean componenteObrigatorio = rs.getBoolean("comp_obrigatorio");
                     int semestre = rs.getInt("semestre");
                     //Definida as variáveis que receberão os valores de cada campo...
-                    ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre); //Será instânciado um objeto Componente para mostrar o componente
-                    System.out.println(codCompCurricular.toUpperCase() + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente()); //Saída.
+
+                    ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
+                     //Será instânciado um objeto Componente para mostrar o componente
+                    System.out.println(codCompCurricular.toUpperCase() + " - " + nomeDisciplina + " - " + cargaHorariaComp + "h" + "\t " + componente.mostrarTipoComponente());
+                     //Saída.
                 } while (rs.next());
+
             }
 
             //Fechando a conexão
@@ -196,6 +212,7 @@ public class ComponenteCurricular {
             rs.close();
             psmt.close();
         } catch (java.sql.SQLException e) {
+
             System.out.println(e.getMessage());
         }
     }
@@ -205,15 +222,18 @@ public class ComponenteCurricular {
         PreparedStatement psmt = null;
         ResultSet rs = null;
         try{
+
             Connection connection = ElephantSQLConnection.getConnection(); //Inicia a conexão com o banco de dados
             String query = "SELECT * FROM comp_curricular"; // A variável query está pedindo para mostrar todas as linhas do banco 
             psmt = connection.prepareStatement(query); //PrepararedStatement executa a query
             rs = psmt.executeQuery(); //ResultSet percorre os resultados 
 
-            if (!rs.next()) {
+            if (!rs.next()) {//Verifica se tem dados no banco...
                 System.out.println("Não há nenhum componente curricular cadastrado.");
             } else {
+
                 do {
+                    //A variável rs pode assumir os valores dos cantos, então é criado váriaveis para armazenar esse valores.
                     String codCompCurricular = rs.getString("cod_componente");
                     String nomeDisciplina = rs.getString("nome_disciplina");
                     int cargaHorariaComp = rs.getInt("carga_horaria_comp");
@@ -221,77 +241,50 @@ public class ComponenteCurricular {
                     int semestre = rs.getInt("semestre");
     
                     ComponenteCurricular componente = new ComponenteCurricular(codCompCurricular, nomeDisciplina, cargaHorariaComp, componenteObrigatorio, semestre);
+
                     System.out.println(componente);
+                    //Saída
                 } while (rs.next());
+
             }
-    
+
+            //Fechando as variáveis que se conectam 
+            rs.close();
             psmt.close();
             connection.close();
     
-        }catch(java.sql.SQLException e) {
+        }catch(java.sql.SQLException e) {//Tratamento de exeções
+
             System.out.println(e.getMessage());
         }
     }
     
-
+//Esse método o usuário ira passar o código do componente que deseja excluir, se o banco tiver o código irá excluir senão apresentará um erro.
     public static void excluirComponentesCurriculares(String codCompCurricular){
         PreparedStatement pstmt = null;
 
         try {
+
             Connection connection = ElephantSQLConnection.getConnection();
-            pstmt = connection.prepareStatement("DELETE from comp_curricular where cod_componente = ?");
+            String query = "DELETE from comp_curricular where cod_componente = ?";
+            pstmt = connection.prepareStatement(query);
             pstmt.setString(1, codCompCurricular);
-            int qntLinhas = pstmt.executeUpdate();
+            int qntLinhas = pstmt.executeUpdate(); //ExecuteUpdate retornara as linhas excluídas
     
-            if (qntLinhas > 0){
+            if (qntLinhas > 0){ //Verificação se o componente foi excluido.
                 System.out.println("Componente curricular excluído com sucesso!");
             }
             else {
+
                 System.out.println("Componente curricular não encontrado!");
             }
     
-        } catch (SQLException e) {
+        } catch (SQLException e) { //Tratamento de exeção.
             System.out.println("Erro ao excluir componente curricular: " + e.getMessage());
         }
     }
 
-
-
-    public static String buscarCodigoComponente(String cod){
-        PreparedStatement psmt = null;
-        ResultSet rs = null;
-
-        try {
-            Connection connection = ElephantSQLConnection.getConnection();
-            String query = "SELECT cod_componente FROM comp_curricular WHERE cod_componente = ?";
-            psmt = connection.prepareStatement(query);
-            psmt.setString(1, cod);
-             rs = psmt.executeQuery();
-
-             if (rs.next()) {
-                // Obter os dados do componente curricular a partir do ResultSet
-                String codComponente = rs.getString("cod_componente");
-                       
-                rs.close();
-                psmt.close();
-                connection.close();
-
-                return codComponente; 
-            
-            
-                // Faça o que for necessário com o objeto componente
-            } else {
-
-                return null;// Componente curricular não encontrado
-
-            }            
-
-        } catch (SQLException e) {
-           System.out.println(e.getMessage());
-            return null;
-        }
-    }
-    
+  
 //Esse método é utilizado para a impressão do componente obrigatório.
     public String mostrarTipoComponente() {
         if (componenteObrigatorio) {
@@ -302,10 +295,10 @@ public class ComponenteCurricular {
     }
 
 @Override
-    public String toString() {
-        if(componenteObrigatorio){
+    public String toString() { //Configurando o toString com a saída adequada.
+        if(componenteObrigatorio){ // Se o componente for obrigátorio o toString apresentará Obrigatório.
         return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
-        }else{
+        }else{ //Senão optativa.
             return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
         }
     }

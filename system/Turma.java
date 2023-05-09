@@ -91,6 +91,16 @@ public class Turma {
                 if (rs.next()) {
                     System.out.println("Erro! O professor já possui uma turma no mesmo horário.");
                 } else {
+                                    // Verifica se o semestre da turma é igual ao semestre do componente curricular
+                query = "SELECT * FROM comp_curricular WHERE cod_componente = ? AND semestre = ?";
+                pstm = connection.prepareStatement(query);
+                pstm.setString(1, turma.getCodComponente());
+                pstm.setInt(2, turma.getSemestre());
+                rs = pstm.executeQuery();
+
+                if (!rs.next()) {
+                    System.out.println("Erro! O componente curricular não possui um semestre correspondente.");
+                }else {
                     // Pode cadastrar a nova turma
                     query = "INSERT INTO turma (cod_turma, horario, horario_aula, semestre, cod_componente, ciap_professor) VALUES (?,?,?,?,?,?)";
                     pstm = connection.prepareStatement(query);
@@ -111,6 +121,7 @@ public class Turma {
                     }
                 }
             }
+        }
     
             pstm.close();
             rs.close();

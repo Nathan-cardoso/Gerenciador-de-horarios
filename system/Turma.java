@@ -350,9 +350,10 @@ public class Turma {
                     String horario = rs.getString("horario");
                     int horarioAula = rs.getInt("horario_aula");
                     int semestre = rs.getInt("semestre");
+                    String codProf = rs.getString("ciap_professor");
                     
                     //Criando o objeto que ira assumir os valores
-                    Turma turma = new Turma(codTurma, horario, horarioAula, semestre, codComponente, horario);
+                    Turma turma = new Turma(codTurma, horario, horarioAula, semestre, codComponente, codProf);
                     System.out.println(turma);
                     //Saída.
                 } while (rs.next());
@@ -476,6 +477,6 @@ public class Turma {
     
     @Override
     public String toString() { 
-        return String.format("codigo: %-5s | Componente: %-5s | Turno: %-5s | Horario: %s | Semestre: %s", codTurma, codComponente, horario, horarioAula, semestre);
+        return String.format("codigo: %-5s | Componente: %-5s | Turno: %-5s | Horario: %s | Semestre: %s | Ciap Professor: %s |", codTurma, codComponente, horario, horarioAula, semestre, codProf);
     }
 }

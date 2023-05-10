@@ -44,45 +44,33 @@ public class Professor {
     public int getCargaHoraria() {
         return cargaHoraria;
     }
-
-    // public ArrayList<String> getComponentes() {
-    //     return componentes;
-    // } 
-
-    // Método para adicionar um componente curricular ministrado pelo professor
-    // public void addComponente(String componente) {
-    //     componentes.add(componente);
-    //     // Incrementa a carga horária do professor com a carga horária do componente
-    // }
-
-    // Verifica se o professor pode ministrar um componente curricular
-    // public boolean podeMinistrar(ComponenteCurricular componente) {
-
-    // }
     
     //Metodo que cafastra o Professor
     public static void cadastrarProfessor(Professor professor) {
         try {
 
+            // Obtém a conexão com o banco de dados.
             Connection connection = ElephantSQLConnection.getConnection();
+            // Define a consulta SQL para inserir o novo professor na tabela "professor".
             String query = "INSERT INTO professor (ciap, nome, formacao, email) VALUES (?,?,?,?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1,professor.getCiap());
             pstmt.setString(2, professor.getNome());
             pstmt.setString(3, professor.getFormacao());
             pstmt.setString(4, professor.getEmail());
-            // pstmt.setInt(5, professor.getCargaHoraria());
+             // Executa a consulta SQL e obtém o número de linhas afetadas.
             int linhasAfetadas = pstmt.executeUpdate();
-
+            // Verifica se a operação foi bem-sucedida ou não.
             if (linhasAfetadas > 0) {
                  System.out.println("Professor cadastrado com sucesso!");
             } else {
                 System.out.println("Erro ao cadastrar professor.");
             }
-
+            // Fecha o PreparedStatement e a conexão com o banco de dados.
             pstmt.close();
             connection.close();
         } catch (Exception e) {
+             // Em caso de erro, exibe essa mensagem 
             System.out.println("Erro ao cadastrar professor: " + e.getMessage());
         }
     } 
@@ -93,26 +81,32 @@ public class Professor {
             Scanner scan = new Scanner(System.in);
    
             do {
+                 // Solicita o CIAP do professor que se deseja editar.
                 System.out.println("Digite o CIAP do professor que deseja editar: ");
                 String ciap = scan.nextLine();
-   
+
+                 // Obtém a conexão com o banco de dados.
                 Connection connection = ElephantSQLConnection.getConnection();
+                 // Define a consulta SQL para selecionar o professor com o CIAP fornecido.
                 String query = "SELECT * FROM professor WHERE ciap=?";
                 PreparedStatement pstmt = connection.prepareStatement(query);
                 pstmt.setString(1, ciap);
-   
+
+                 // Executa a consulta SQL e obtém o resultado.
                 ResultSet rs = pstmt.executeQuery();
-   
+                // Verifica se o professor foi encontrado ou não. 
                 if (!rs.next()) {
                     System.out.println("Professor não encontrado.");
                 } else {
+                    // Solicita as opção para o usuario escolher.
                     System.out.println("Digite a opção que deseja editar:");
                     System.out.println("1 - Nome");
                     System.out.println("2 - Formação");
                     System.out.println("3 - Email");
                     int opcao = scan.nextInt();
                     scan.nextLine();  //Consumir quebra de linha
-   
+                    
+                    // Define o nome do campo que será atualizado com base na opção fornecida.
                     String campo = "";
                     switch(opcao) {
                         case 1:
@@ -129,15 +123,18 @@ public class Professor {
                             break;
                     }
    
+                     // Atualiza o valor do campo correspondente com o novo valor fornecido.
                     if (!campo.equals("")) {
                         System.out.print("Digite o novo valor para " + campo + ": ");
                         String novoValor = scan.nextLine();
-   
+                        
+                         // Define a consulta SQL para atualizar o campo do professor selecionado.
                         query = "UPDATE professor SET " + campo + "=? WHERE ciap=?";
                         pstmt = connection.prepareStatement(query);
                         pstmt.setString(1, novoValor);
                         pstmt.setString(2, ciap);
-   
+                        
+                        // Executa a consulta SQL de atualização e verifica se a operação foi bem-sucedida ou não
                         int linhasAfetadas = pstmt.executeUpdate();
    
                         if (linhasAfetadas > 0) {
@@ -149,6 +146,7 @@ public class Professor {
                           
                     }
                 }
+                 // Fecha o ResultSet, o PreparedStatement e a conexão com o banco de dados.
                 rs.close();
                 pstmt.close();
                 connection.close();
@@ -157,42 +155,48 @@ public class Professor {
             } while (true);
    
         } catch (Exception e) {
+            // Em caso de erro, exibe essa mensagem 
             System.out.println("Erro ao editar professor: " + e.getMessage());
         }
     }  
 
     // Metodo para ver dados de um professor
     public static void verDadosDeUmProfessor(String idProf){
+         // Declara as variaveis
         PreparedStatement psmt = null;
         ResultSet rs = null;
 
         try {
             Connection connection = ElephantSQLConnection.getConnection();
+            // Preparação da consulta SQL com um parâmetro (o ciap do professor)
             String querySearch = "SELECT * FROM professor WHERE ciap = ?";
             psmt = connection.prepareStatement(querySearch);
             psmt.setString(1, idProf);
+            // Execução da consulta SQL
             rs = psmt.executeQuery();
             
             if(!rs.next()){
                 System.out.println("O ciap não foi encontrado...");
             }else{
-                do{
+                do{// Recuperação dos dados do professor a partir do ResultSet retornado pela consulta SQL
                     String ciap = rs.getString("ciap");
                     String nome = rs.getString("nome");
-                    String formacao = rs.getString("formacao");
+                    String formacao = rs.getString("formacao");//Obtem os resultados
                     String email = rs.getString("email");
-
+                     // Criação de um objeto Professor com os dados recuperados do ResultSet
                     Professor prof = new Professor(nome, formacao, ciap, email);
+                     // Imprime os dos dados do professor
                     System.out.println("Professor correspondente ao CIAP " + idProf);
                     System.out.println(prof.getNome() + "\t\t " + prof.getFormacao() + "\t\t" + prof.getEmail() );
                 }while(rs.next());
             }
-
+            // Fechamento das conexões
             connection.close();
             rs.close();
             psmt.close();
 
         } catch (SQLException e) {
+            // Em caso de erro, exibe essa mensagem 
             System.out.println("Erro em ver dados do professor: " + e.getMessage());
         }
 
@@ -201,34 +205,35 @@ public class Professor {
     public static void listarProfessores() {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
+    
         try {
             Connection connection = ElephantSQLConnection.getConnection(); // obtém a conexão com o banco de dados
             String query = "SELECT * FROM professor"; // query para selecionar todos os professores
             pstmt = connection.prepareStatement(query); // prepara a query para ser executada
             rs = pstmt.executeQuery(); // executa a query e obtém os resultados
-
-         if (!rs.next()) {
+    
+            if (!rs.next()) { // verifica se não há resultados
                 System.out.println("Não há nenhum professor cadastrado.");
             } else {
                 do {
-                    String nome = rs.getString("nome");
-                    String formacao = rs.getString("formacao");
-                    String ciap = rs.getString("ciap");
-                    String email = rs.getString("email");
-
-                    Professor professor = new Professor(nome, formacao, ciap, email);
-                    System.out.println(professor);
-                } while (rs.next());
+                    String nome = rs.getString("nome"); 
+                    String formacao = rs.getString("formacao"); //Obtem os resultados
+                    String ciap = rs.getString("ciap"); 
+                    String email = rs.getString("email"); 
+                    // cria um objeto Professor com os dados obtidos
+                    Professor professor = new Professor(nome, formacao, ciap, email); 
+                    System.out.println(professor); // exibe o objeto Professor.
+                } while (rs.next()); 
             }
-
+            // Fecha a concecxão com o Banco de dados.
             pstmt.close();
             connection.close();
-
+    
         } catch (SQLException e) {
+            // Em caso de erro, exibe essa mensagem
             System.out.println("Erro ao listar professores: " + e.getMessage());
         }
-    }
+    }    
 
     // Metodo que exlui o professor
     public static void excluirProfessor(String ciap) {
@@ -238,10 +243,11 @@ public class Professor {
             // Query para deletar professor com o CIAP informado
             String query = "DELETE FROM professor WHERE ciap = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
+            // Define o valor do parâmetro da query como o CIAP informado
             pstmt.setString(1, ciap);
-    
+            // Executa a query e obtém o número de linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
-    
+             // Verifica se pelo menos uma linha foi afetada
             if (linhasAfetadas > 0) {
                 System.out.println("Professor excluído com sucesso!");
             } else {
@@ -252,10 +258,12 @@ public class Professor {
             connection.close();
     
         } catch (SQLException e) {
+            //Em caso de erro imprime essa mensagem
             System.out.println("Erro ao excluir professor: " + e.getMessage());
         }
     }
 
+    // Metodo para retornar os valores 
     @Override
     public String toString() {
         return String.format("Nome: %-20s | Formação: %-10s | CIAP: %-5s | Email: %s", nome, formacao, ciap, email);

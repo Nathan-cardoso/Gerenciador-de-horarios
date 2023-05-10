@@ -155,20 +155,21 @@ public class Turma {
         ResultSet rs = null;
 
         try {
-            Connection connection = ElephantSQLConnection.getConnection();
+            Connection connection = ElephantSQLConnection.getConnection(); //Veriável de conexão com o banco 
 
-            String query = "SELECT * FROM turma WHERE cod_turma = ?";
+            String query = "SELECT * FROM turma WHERE cod_turma = ?"; //Verifica se o código passado pelo usuário está registrado no banco 
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, codTurma);
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next()) { //Se caso o código seja válido...
+                 //Coletando os novos dados da turma 
                 int horario_aula;
                 System.out.println("Informe os novos valores para a turma " + codTurma + " : ");
                 System.out.println("Informe o turno");
                 String horario = scan.nextLine();
 
-                //Coletando os novos dados da turma 
+               
                 if (horario.equalsIgnoreCase("manha")) {
                     Menu.exibirHorariosManha();
 
@@ -263,9 +264,9 @@ public class Turma {
                         pstmt.setString(5, turma.getCodProf());
                         pstmt.setString(6, turma.getCodTurma());
 
-                        int linhasAfetadas = pstmt.executeUpdate();
+                        int linhasAfetadas = pstmt.executeUpdate(); 
 
-                        if (linhasAfetadas > 0) {
+                        if (linhasAfetadas > 0) {//Verifica se a turma foi cadastrada com sucesso.
                             System.out.println("Turma atualizada com sucesso.");
                         } else {
                             System.out.println("Erro na atualização da turma.");
@@ -277,6 +278,7 @@ public class Turma {
             System.out.println("Não foi encontrado nenhuma turma com esse código");
         }
 
+        //Fechando as variáveis.
         pstmt.close();
         rs.close();
         connection.close();

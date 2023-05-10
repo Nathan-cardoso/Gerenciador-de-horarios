@@ -4,16 +4,157 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import javax.sql.rowset.spi.SyncProvider;
 
 public class Main{
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Informe o ciap do professor: ");
-        String ciapParaListar = scan.nextLine();
-        Turma.listarTurmasPorProfessor(ciapParaListar);
+        editarTurma("1");
+    }
+
+    public static void editarTurma(String codTurma) {
+        Scanner sc = new Scanner(System.in);
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Connection connection = ElephantSQLConnection.getConnection();
+
+            String query = "SELECT * FROM turma WHERE cod_turma = ?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, codTurma);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                int horario_aula;
+                System.out.println("Informe os novos valores para a turma " + codTurma + " : ");
+                System.out.println("Informe o turno");
+                String horario = sc.nextLine();
+
+                //Coletando os novos dados da turma 
+                if (horario.equalsIgnoreCase("manha")) {
+                    Menu.exibirHorariosManha();
+
+                    System.out.println("Digite o horario da aula: ");
+                    horario_aula = sc.nextInt();
+
+                    if (horario_aula < 1 || horario_aula > 6) {
+                        System.out.println("Horario não é disponivel");
+                        return;
+                    }
+                } else if (horario.equalsIgnoreCase("tarde")) {
+                    Menu.exibirHorariosTarde();
+                    System.out.println("Digite o horario da aula: ");
+                    horario_aula = sc.nextInt();
+
+                    if (horario_aula < 1 || horario_aula > 6) {
+                        System.out.println("Horario não é disponivel");
+                        return;
+                    }
+                } else if (horario.equalsIgnoreCase("noite")) {
+                    Menu.exibirHorariosNoite();
+
+                    System.out.println("Digite o horario da aula: ");
+                    horario_aula = sc.nextInt();
+
+                    if (horario_aula < 1 || horario_aula > 6) {
+                        System.out.println("Horario não é disponivel");
+                        return;
+                    }
+                } else {
+                    System.out.println("Turno inválido.");
+                    return;
+                }
+
+                System.out.println("Semestre: ");
+                int semestre = sc.nextInt();
+
+                sc.nextLine();
+                System.out.println("Atribua o componente curricular digitando o seu codigo: ");
+                String codCC = sc.nextLine();
+
+                System.out.println("Para atribuir um professor a turma, digite seu ciap: ");
+                String codProf = sc.nextLine();
+
+                Turma turma = new Turma(codTurma, horario, horario_aula, semestre, codCC, codProf);
+
+                // Verifica se já existe uma turma com o mesmo horário e semestre
+                query = "SELECT * FROM turma WHERE horario = ? AND semestre = ? AND horario_aula = ?";
+                // Essa query procura no banco alguma turma com o semestre, horario e hora_aula igual ao que foi passado pelo usuário.
+                pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, turma.getHorario());
+                pstmt.setInt(2, turma.getSemestre());
+                pstmt.setInt(3, turma.getHorarioAula());
+
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    System.out.println("Erro! Já existe uma turma com o mesmo horário e semestre.");
+                } else {                    query = "SELECT * FROM turma WHERE ciap_professor = ? AND horario = ? AND horario_aula = ?";
+                // Essa query lista as tabelas com o ciap, horario e horario aula fornecido pelo usuário.
+                pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, turma.getCodProf());
+                pstmt.setString(2, turma.getHorario());
+                pstmt.setInt(3, turma.getHorarioAula());
+
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    System.out.println("Erro! O professor já possui uma turma no mesmo horário.");
+                } else {
+                    // Verifica se o semestre da turma é igual ao semestre do componente curricular
+                    query = "SELECT * FROM comp_curricular WHERE cod_componente = ? AND semestre = ?";
+                    // Essa query mostra o semestre do componente curricular que é igual ao semestre que o usuário passou para a turma
+                    pstmt = connection.prepareStatement(query);
+                    pstmt.setString(1, turma.getCodComponente());
+                    pstmt.setInt(2, turma.getSemestre());
+
+                    rs = pstmt.executeQuery();
+
+                    if (!rs.next()) {
+                        System.out.println("Erro! O componente curricular não possui um semestre correspondente.");
+                    } else {
+                        // Atualiza a turma com os novos valores
+                        query = "UPDATE turma SET horario = ?, horario_aula = ?, semestre = ?, cod_componente = ?, ciap_professor = ? WHERE cod_turma = ?";
+                        pstmt = connection.prepareStatement(query);
+                        pstmt.setString(1, turma.getHorario());
+                        pstmt.setInt(2, turma.getHorarioAula());
+                        pstmt.setInt(3, turma.getSemestre());
+                        pstmt.setString(4, turma.getCodComponente());
+                        pstmt.setString(5, turma.getCodProf());
+                        pstmt.setString(6, turma.getCodTurma());
+
+                        int linhasAfetadas = pstmt.executeUpdate();
+
+                        if (linhasAfetadas > 0) {
+                            System.out.println("Turma atualizada com sucesso.");
+                        } else {
+                            System.out.println("Erro na atualização da turma.");
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("Não foi encontrado nenhuma turma com esse código");
+        }
+
+        pstmt.close();
+        rs.close();
+        connection.close();
+
+    } catch (SQLException e) {
+        System.out.println("Erro ao editar turma: " + e.getMessage());
     }
 }
+
+
+}
+
+
+
+
+
+
+
 /*public class Main{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

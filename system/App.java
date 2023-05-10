@@ -281,8 +281,10 @@ public class App {
                         break;
         
                         case 2: 
-
-                        System.out.println("ok");
+                            sc.nextLine();
+                            System.out.println("Digite o código da turma: ");
+                            String codTurmaEdi = sc.nextLine();
+                            Turma.editarTurma(codTurmaEdi);
 
                         break;
         

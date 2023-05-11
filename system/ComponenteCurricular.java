@@ -165,7 +165,7 @@ public class ComponenteCurricular {
             //Fechando as conexões para evitar erros futuros 
             pstmt.close();
             connection.close();
-            scan.close();
+            //scan.close();
         }
     } catch (SQLException e) {//Tratamento de exeção 
         System.out.println("Erro ao editar componente curricular: " + e.getMessage());
@@ -297,9 +297,9 @@ public class ComponenteCurricular {
 @Override
     public String toString() { //Configurando o toString com a saída adequada.
         if(componenteObrigatorio){ // Se o componente for obrigátorio o toString apresentará Obrigatório.
-        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular.toLowerCase(), nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
+        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
         }else{ //Senão optativa.
-            return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular.toUpperCase(), nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
+            return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
         }
     }
 }

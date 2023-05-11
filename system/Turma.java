@@ -167,6 +167,7 @@ public class Turma {
                 int horario_aula;
                 System.out.println("Informe os novos valores para a turma " + codTurma + " : ");
                 System.out.println("Informe o turno");
+                Menu.menuTurno();
                 String horario = scan.nextLine();
 
                
@@ -438,7 +439,7 @@ public class Turma {
                     String codProf = rs.getString("ciap_professor");
                     String nomeProf = rs.getString("nome");
                     Turma turma = new Turma(idTurma, horario, horarioAula, semestre, codComponente, codProf);
-                    System.out.println("Turma ministrada por: " + nomeProf + " " + turma);
+                    System.out.println("Turma ministrada por: " + nomeProf + " código da turma: " + turma.getCodComponente() + " | Componente: " + turma.getCodComponente() + " | turno: " + turma.getHorario() + " | Horario: " + turma.getHorarioAula() + " | Semestre: " + turma.getSemestre());
                 }while(rs.next());
 
             }

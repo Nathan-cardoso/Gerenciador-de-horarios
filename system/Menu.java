@@ -23,7 +23,7 @@ public class Menu {
         System.out.println("|[1] - Cadastrar Professor\t |");
         System.out.println("|[2] - Editar Professor\t\t |");
         System.out.println("|[3] - Ver dados de um professor |");
-        System.out.println("|[4] - Listar Professores\t\t |");
+        System.out.println("|[4] - Listar Professores\t |");
         System.out.println("|[5] - Excluir professor\t |");
         System.out.println("|[6] - Voltar\t\t\t |\n");
     }
@@ -103,5 +103,10 @@ public class Menu {
 
     }
 
+    //Menu para o turno
+    public static void menuTurno(){
 
+        System.out.println("manha\t\t tarde \t\tnoite");
+
+    }
 }

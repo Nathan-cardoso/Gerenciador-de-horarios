@@ -24,14 +24,14 @@ public class App {
                         System.out.println("Digite seu ciap: ");
                         String ciap = sc.nextLine();
                 
-                        System.out.println("Nome:");
+                        System.out.println("Digite o Nome:");
                         String nome = sc. nextLine();
                 
-                        System.out.println("titulo: ");
+                        System.out.println("Digite a Formação: ");
                         String formacao = sc.nextLine();
                 
                 
-                        System.out.println("email: ");
+                        System.out.println("Digite o Email: ");
                         String email = sc.nextLine();
                 
                         Professor prof = new Professor(nome, formacao,ciap, email);
@@ -217,6 +217,7 @@ public class App {
             
             
                         System.out.println("Informe o turno");
+                        Menu.menuTurno();
                         String horario = sc.nextLine();
 
                         if (horario.equalsIgnoreCase("manha")) {

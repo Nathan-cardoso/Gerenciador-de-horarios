@@ -297,9 +297,9 @@ public class ComponenteCurricular {
 @Override
     public String toString() { //Configurando o toString com a saída adequada.
         if(componenteObrigatorio){ // Se o componente for obrigátorio o toString apresentará Obrigatório.
-        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
+        return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular.toLowerCase(), nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
         }else{ //Senão optativa.
-            return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s",codCompCurricular, nomeDisciplina, cargaHorariaComp, mostrarTipoComponente());
+            return String.format("Codigo: %-10s | Disciplina: %-10s | Carga Horaria: %-5s | Componente : %s | Semestre : %s",codCompCurricular.toUpperCase(), nomeDisciplina, cargaHorariaComp, mostrarTipoComponente(), semestre);
         }
     }
 }

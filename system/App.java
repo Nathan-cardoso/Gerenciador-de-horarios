@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        short opcao; //Variável que recebe as opções do usuário
+        short opcao; 
         Scanner sc = new Scanner(System.in);
 
         do{
-            //Exibição do menu principal
+            
             Menu.menuPrincipal();
             System.out.print("Digite: ");
             opcao = sc.nextShort();
@@ -66,11 +66,11 @@ public class App {
                         System.out.println("Digite o ciap do professor: ");
                         String ciapTemp = sc.nextLine();
 
-                        System.out.println("\tDeseja realmente exluir o professor?");//Pedindo ao usuário uma mensagem de confirmação
+                        System.out.println("\tDeseja realmente exluir o professor?");
                         System.out.println("Confirme a ação\t1 - sim \t outro numero - nao");
                         acessoTemp = sc.nextShort();
 
-                        if(acessoTemp == 1){//verificação
+                        if(acessoTemp == 1){
 
                             Professor.excluirProfessor(ciapTemp);
 
@@ -81,10 +81,10 @@ public class App {
                         break;
 
                         case 6:
-                        //Se a opção 6 for digitada sai do menu.
+                        
                         break;
                         default:
-                        //Mensagem de notificação do erro
+                        
                         System.out.println("Erro de digitação");
                         break;
         
@@ -124,7 +124,7 @@ public class App {
                         escolhaOptativa = sc.nextShort();
 
                         boolean componenteObrigatorio;
-                        if(escolhaOptativa == 1){ //Verificando se o componente é obrigatório
+                        if(escolhaOptativa == 1){ 
 
                             componenteObrigatorio = true;
 
@@ -176,9 +176,9 @@ public class App {
                         String codCC = sc.nextLine();
 
                         System.out.println("\tDeseja excluir esse componente?\nConfirme a ação\n1 - sim\t outro numero - nao");
-                        short confirmacao = sc.nextShort();//Pedindo uma confirmação para excluir
+                        short confirmacao = sc.nextShort();
 
-                        if(confirmacao == 1){//Verificação
+                        if(confirmacao == 1){
 
                             ComponenteCurricular.excluirComponentesCurriculares(codCC);
 
@@ -191,7 +191,7 @@ public class App {
                         break;
 
                         case 6:
-                        //Se a opção 6 for digitada sai do menu.
+                        
                         break;
                         default:
 
@@ -325,9 +325,9 @@ public class App {
                         String codTurma = sc.nextLine();
 
                         System.out.println("\tDeseja excluir essa turma?\nConfirme a ação\n1 - sim\t outro número - não");
-                        short confirmacao = sc.nextShort(); //Pedindo a confirmação do usuário
+                        short confirmacao = sc.nextShort(); 
 
-                        if(confirmacao == 1) {//verifica se pode excluir
+                        if(confirmacao == 1) {
 
                             Turma.excluirTurma(codTurma);
 
@@ -340,7 +340,7 @@ public class App {
                         break;
 
                         case 8:
-                        //Se a opção 8 for digitada sai do menu.
+                        
                         break;
 
                         default:
@@ -371,8 +371,6 @@ public class App {
 
 
     }
-
-    //Método para ajudar no tratamento de alguns erros
     public static boolean verificacaoDeCodigo(String cod){
         if(cod == null){
             return false;
